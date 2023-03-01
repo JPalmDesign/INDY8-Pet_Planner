@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "7fe1e791ee7891ea697ca6c11e5182ce713075f219fd7fa3991903656f7e3504"
+build_start_time: [1677424670, 98175048]
+build_end_time: [1677424672, 142326831]
+inputs:
+  "/Users/sarahgraddy/Documents/CS4850/pet-planner/pet_planner/macos/Flutter/GeneratedPluginRegistrant.swift": [1677424663, 100796222]
+  "/Users/sarahgraddy/Documents/CS4850/pet-planner/pet_planner/macos/Runner/AppDelegate.swift": [1674574618, 0]
+  "/Users/sarahgraddy/Documents/CS4850/pet-planner/pet_planner/macos/Runner/MainFlutterWindow.swift": [1674574618, 0]
