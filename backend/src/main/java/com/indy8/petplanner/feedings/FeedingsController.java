@@ -1,18 +1,17 @@
-package com.indy8.petplanner.appointments;
+package com.indy8.petplanner.feedings;
 
 import com.indy8.petplanner.pets.PetByIdResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class AppointmentsController {
+public class FeedingsController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/pet")
-    public AppointmentByIdResponse getAppointmentById(@RequestParam(value = "id") String id) {
-        return new AppointmentByIdResponse("UUID", LocalDate.of(2023,3,15));
+    public FeedingByIdResponse getFeedingById(@RequestParam(value = "id") String id) {
+        return new FeedingByIdResponse("UUID");
     }
 }
