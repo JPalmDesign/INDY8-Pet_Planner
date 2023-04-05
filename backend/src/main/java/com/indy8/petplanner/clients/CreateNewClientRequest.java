@@ -1,10 +1,6 @@
 package com.indy8.petplanner.clients;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ClientByIdResponse {
-    private Integer id;                     //Auto generate unique identifier
+public class CreateNewClientRequest {
     private String firstName;
     private char middleInitial;
     private String lastName;
@@ -12,18 +8,8 @@ public class ClientByIdResponse {
     private String addressLine1;
     private String addressLine2;
     private String city;
-    private String state;               //Need UI to code the list of states as a drop down list
+    private String state;
     private int zip;
-
-    private List<ClientPet> clientPetList = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -95,13 +81,5 @@ public class ClientByIdResponse {
 
     public void setZip(int zip) {
         this.zip = zip;
-    }
-
-    public List<ClientPet> getClientPetList() {
-        return clientPetList;
-    }
-
-    public void setClientPetList(List<ClientPet> clientPetList) {
-        this.clientPetList = clientPetList;
     }
 }

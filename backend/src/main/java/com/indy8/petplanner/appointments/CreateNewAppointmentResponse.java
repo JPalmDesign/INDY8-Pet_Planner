@@ -1,12 +1,10 @@
 package com.indy8.petplanner.appointments;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-public final class AppointmentByIdResponse {
-    private int Id;
+public class CreateNewAppointmentResponse {
+    private int id;
     private String appointmentType;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -14,11 +12,11 @@ public final class AppointmentByIdResponse {
     private BigDecimal totalCost;
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getAppointmentType() {

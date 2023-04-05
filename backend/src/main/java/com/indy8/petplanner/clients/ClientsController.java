@@ -1,17 +1,38 @@
 package com.indy8.petplanner.clients;
 
-import com.indy8.petplanner.pets.PetByIdResponse;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.indy8.petplanner.config.ClientMapper;
+import com.indy8.petplanner.dataaccess.ClientRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+@RestController
 public class ClientsController {
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+
+    private final ClientRepository clientRepository;
+    private final ClientMapper clientMapper;
+
+    public ClientsController(ClientRepository clientRepository, ClientMapper clientMapper) {
+        this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
+    }
 
     @GetMapping("/client")
-    public ClientByIdResponse getClientById(@RequestParam(value = "id") String id) {
-        return new ClientByIdResponse("UUID", "Rory", "Palmer");
+    public ClientByIdResponse getClientById(@RequestParam(value = "id") Integer id) {
+        var dbResult = clientRepository.findById(id);
+        if(dbResult.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "client not found"
+            );
+        }
+        return this.clientMapper.mapClientToClientByIdResponse(dbResult.get());
+    }
+
+    @PostMapping("/client")
+    public CreateNewClientResponse createNewClient(@RequestBody CreateNewClientRequest createNewClientRequest) {
+        var client = this.clientMapper.mapCreateNewClientRequestToClient(createNewClientRequest);
+        clientRepository.save(client);
+        var response = this.clientMapper.mapClientToCreateNewClientResponse(client);
+        return response;
     }
 }

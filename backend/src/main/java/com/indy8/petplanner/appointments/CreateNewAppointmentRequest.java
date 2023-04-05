@@ -1,25 +1,13 @@
 package com.indy8.petplanner.appointments;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-public final class AppointmentByIdResponse {
-    private int Id;
+public class CreateNewAppointmentRequest {
     private String appointmentType;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private BigDecimal costPerUnit;
-    private BigDecimal totalCost;
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 
     public String getAppointmentType() {
         return appointmentType;
@@ -43,14 +31,6 @@ public final class AppointmentByIdResponse {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
-    }
-
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
     }
 
     public BigDecimal getCostPerUnit() {
