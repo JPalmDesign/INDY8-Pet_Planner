@@ -4,6 +4,8 @@ import 'package:pet_planner/pages/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:pet_planner/pages/event_provider.dart';
 
+// Create new appointments for calendar
+
 class NewAppointmentPage extends StatefulWidget {
   final Event? event;
 
@@ -43,6 +45,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
   @override
   void dispose() {
     titleController.dispose();
+    desc.dispose();
     super.dispose();
   }
 
@@ -224,6 +227,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
           description: desc.text,
           from: fromDate,
           to: toDate,
+          backgroundColor: const Color(0xFFAEB2C5),
           isAllDay: false);
 
       final isEditing = widget.event != null;
@@ -274,7 +278,7 @@ class Event {
     required this.description,
     required this.from,
     required this.to,
-    this.backgroundColor = const Color(0xFFAEB2C5),
+    required this.backgroundColor,
     this.isAllDay = false,
   });
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/app_view.dart';
+import 'package:pet_planner/pages/exist_client.dart';
+import 'package:pet_planner/pages/exist_pet.dart';
 import 'package:pet_planner/pages/forgot_password.dart';
 import 'package:pet_planner/pages/login_page.dart';
 import 'package:pet_planner/pages/new_app.dart';
 import 'package:pet_planner/pages/new_client.dart';
+import 'package:pet_planner/pages/new_feed.dart';
 import 'package:pet_planner/pages/new_pet.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:pet_planner/pages/event_provider.dart';
@@ -25,14 +28,15 @@ class SchedulePage extends StatelessWidget {
                   leading: PopupMenuButton(
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                    color: Color(0xFFAEB2C5),
+                    color: const Color(0xFFAEB2C5),
                     itemBuilder: (context) => [
                       PopupMenuItem(
                         value: 0,
                         child: const Text("Logout"),
                         onTap: () => Future(
                           () => Navigator.of(context).push(
-                            MaterialPageRoute(builder: (_) => LoginPage()),
+                            MaterialPageRoute(
+                                builder: (_) => const LoginPage()),
                           ),
                         ),
                       ),
@@ -41,7 +45,8 @@ class SchedulePage extends StatelessWidget {
                         child: const Text("Reset Password"),
                         onTap: () => Future(
                           () => Navigator.of(context).push(
-                            MaterialPageRoute(builder: (_) => ForgotPassword()),
+                            MaterialPageRoute(
+                                builder: (_) => const ForgotPassword()),
                           ),
                         ),
                       ),
@@ -58,15 +63,56 @@ class SchedulePage extends StatelessWidget {
                           prefixIcon: Icon(Icons.search, color: Colors.black)),
                     ),
                   ))),
-          const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Text(
-                "Your Schedule",
-                style: TextStyle(fontFamily: 'robotoMedium', fontSize: 36),
-              )),
-          // add calendar - maybe syncfusion??
+          Row(children: [
+            Padding(
+                padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFAEB2C5),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return (const OldClientPage());
+                    }));
+                  },
+                  child: const Text("Existing Clients",
+                      style: TextStyle(color: Colors.black)),
+                )),
+            Container(
+                width: 800,
+                child: Padding(
+                    padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Your Schedule",
+                            style: TextStyle(
+                                fontFamily: 'robotoMedium', fontSize: 36),
+                          )
+                        ]))),
+            Padding(
+                padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFAEB2C5),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return (const OldPetPage());
+                      }));
+                    },
+                    child: const Text("Existing Pets",
+                        style: TextStyle(color: Colors.black))))
+          ]),
+          // syncfusion calendar
           Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
               child: SizedBox(
                   height: 500,
                   child: SfCalendar(
@@ -89,8 +135,15 @@ class SchedulePage extends StatelessWidget {
                       ));
                     },
                     todayHighlightColor: const Color(0xFFAEB2C5),
+                    todayTextStyle: const TextStyle(
+                        color: Colors.black, fontFamily: 'robotoRegular'),
                     showCurrentTimeIndicator: true,
                     scheduleViewSettings: const ScheduleViewSettings(
+                        // Calendar display settings
+                        dayHeaderSettings: DayHeaderSettings(
+                            dayTextStyle: TextStyle(color: Colors.black)),
+                        weekHeaderSettings: WeekHeaderSettings(
+                            weekTextStyle: TextStyle(color: Colors.black)),
                         monthHeaderSettings: MonthHeaderSettings(
                             backgroundColor: Color(0xFFAEB2C5),
                             monthTextStyle: TextStyle(
@@ -136,6 +189,14 @@ class SchedulePage extends StatelessWidget {
                     onTap: () => Future(
                           () => Navigator.of(context).push(
                             MaterialPageRoute(builder: (_) => NewPetPage()),
+                          ),
+                        )),
+                PopupMenuItem(
+                    value: 4,
+                    child: Text("New Feeding"),
+                    onTap: () => Future(
+                          () => Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => NewFeedingPage()),
                           ),
                         ))
               ],

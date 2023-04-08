@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pet_planner/pages/forgot_password.dart';
-import 'package:pet_planner/pages/login_page.dart';
 import 'package:pet_planner/pages/new_app.dart';
-import 'package:pet_planner/pages/new_client.dart';
-import 'package:pet_planner/pages/new_pet.dart';
 import 'package:pet_planner/pages/schedule_page.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:pet_planner/pages/event_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+// Displays information about an event, user can edit and delete event
 
 class AppViewingPage extends StatelessWidget {
   final Event event;
@@ -52,10 +49,11 @@ class AppViewingPage extends StatelessWidget {
             SizedBox(height: 32),
             Row(children: [
               const Icon(
-                Icons.pets_outlined,
+                Icons.pets,
                 color: Color(0xFFAEB2C5),
                 size: 30,
               ),
+              const SizedBox(width: 10),
               Text(event.title,
                   style:
                       const TextStyle(fontSize: 30, fontFamily: 'robotoBold')),
