@@ -2,27 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<Pet> createPet(
-  String petName,
-  String breed,
-  String color,
-  String weight,
-  String playGroup,
-  String dob,
-) async {
-  final response = await http.post(Uri.parse('url')), body;
-  jsonEncode(<String, String>{
-    'petName': petName,
-    // add the rest later
-  });
-
-  if (response.statusCode == 201) {
-    return Pet.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to create pet.');
-  }
-}
-
 class Pet {
   final String petName;
   final String breed;
@@ -42,12 +21,28 @@ class Pet {
 
   factory Pet.fromJson(Map<String, dynamic> json) {
     return Pet(
-      petName: json['pettName'],
+      petName: json['petName'],
       breed: json['breed'],
       weight: json['weight'],
       color: json['color'],
       playGroup: json['playGroup'],
       dob: json['dob'],
     );
+  }
+}
+
+Future<Pet> createPet(String petName) async {
+  final response =
+      await http.post(Uri.parse('https://petplanner.azurewebsites.net'),
+          headers: <String, String>{
+            'Content-Type': 'test/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{'petName': petName}));
+
+  if (response.statusCode == 201) {
+    // 201 = CREATED
+    return Pet.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to create pet.');
   }
 }

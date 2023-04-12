@@ -79,4 +79,18 @@ class OldPetPage extends StatelessWidget {
                   )))
         ]));
   }
+
+  /* FutureBuilder<Pet> buildFutureBuilder() {
+    return FutureBuilder<Pet>(
+        future: _futurePet,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Text(snapshot.data!.petName);
+          } else if (snapshot.hasError) {
+            return Text('${snapshot.error}');
+          }
+
+          return const CircularProgressIndicator();
+        });
+  } */
 }

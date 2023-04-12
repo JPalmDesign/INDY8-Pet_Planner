@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_planner/pages/pet_class.dart';
 
 class ViewPetPage extends StatelessWidget {
   const ViewPetPage({super.key});

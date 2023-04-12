@@ -7,7 +7,7 @@ class NewClientPage extends StatefulWidget {
   const NewClientPage({super.key});
 
   @override
-  _NewClientPageState createState() {
+  State<NewClientPage> createState() {
     return _NewClientPageState();
   }
 }
@@ -47,15 +47,15 @@ class _NewClientPageState extends State<NewClientPage> {
               ),
               onPressed: () {
                 setState(() {
-                  _futureClient = createClient(
-                      firstNameContr.text,
-                      lastNameContr.text,
-                      phoneNumContr.text,
-                      emailContr.text,
-                      streetAddressContr.text,
-                      cityContr.text,
-                      stateContr.text,
-                      postalCodeContr.text);
+                  _futureClient = createClient(firstNameContr.text
+                      //lastNameContr.text,
+                      //phoneNumContr.text,
+                      //emailContr.text,
+                      // streetAddressContr.text,
+                      // cityContr.text,
+                      // stateContr.text,
+                      // postalCodeContr.text
+                      );
                 });
               },
               icon: const Icon(

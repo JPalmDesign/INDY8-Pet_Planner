@@ -5,10 +5,10 @@ import 'dart:async';
 import 'package:pet_planner/pages/pet_class.dart';
 
 class NewPetPage extends StatefulWidget {
-  NewPetPage({super.key});
+  const NewPetPage({super.key});
 
   @override
-  _NewPetPageState createState() {
+  State<NewPetPage> createState() {
     return _NewPetPageState();
   }
 }
@@ -41,11 +41,11 @@ class _NewPetPageState extends State<NewPetPage> {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
-            onPressed: () => Future(
-              () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => SchedulePage()),
-              ),
-            ),
+            onPressed: () {
+              setState(() {
+                _futurePet = createPet(petName.text);
+              });
+            },
             icon: const Icon(
               Icons.done,
               color: Colors.black,
@@ -57,121 +57,127 @@ class _NewPetPageState extends State<NewPetPage> {
           )
         ],
       ),
-      body: Form(
-          key: _formKey,
-          child: Column(children: [
-            Row(children: [
-              Flexible(
-                  child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                child: TextFormField(
-                    controller: petName,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                    onFieldSubmitted: (_) => () {},
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.pets),
-                        labelText: "Pet Name",
-                        hintText: "Enter the pet's name"),
-                    validator: (petName) => petName != null && petName.isEmpty
-                        ? "Name cannot be empty"
-                        : null),
-              )),
-              Flexible(
-                  child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                child: TextFormField(
-                    controller: dob,
-                    onFieldSubmitted: (_) => () {},
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                    keyboardType: TextInputType.datetime,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Date of Birth",
-                        hintText: "Enter the pet's date of birth"),
-                    validator: (dob) => dob != null && dob.isEmpty
-                        ? "Date of birth cannot be empty"
-                        : null),
-              )),
-            ]),
-            Row(
-              children: [
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextFormField(
-                      controller: color,
-                      onFieldSubmitted: (_) => () {},
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Color",
-                          hintText: "Enter the pet's color"),
-                      validator: (email) => email != null && email.isEmpty
-                          ? "Color cannot be empty"
-                          : null),
-                )),
-                Flexible(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: TextFormField(
-                      controller: breed,
-                      onFieldSubmitted: (_) => () {},
-                      style: const TextStyle(fontSize: 20, color: Colors.black),
-                      decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Breed",
-                          hintText: "Enter the pet's breed"),
-                      validator: (breed) => breed != null && breed.isEmpty
-                          ? "Breed cannot be empty"
-                          : null),
-                )),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-                    child: SizedBox(
-                      width: 1135,
-                      child: TextFormField(
-                          controller: playGroup,
-                          onFieldSubmitted: (_) => () {},
-                          style: const TextStyle(
-                              fontSize: 20, color: Colors.black),
-                          decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Play Group",
-                              hintText: "Enter the pet's play group"),
-                          validator: (playGroup) =>
-                              playGroup != null && playGroup.isEmpty
-                                  ? "Play group cannot be empty"
-                                  : null),
-                    )),
-              ],
-            ),
-            Row(children: [
+      body: Container(
+          child: (_futurePet == null) ? buildForm() : buildFutureBuilder()));
+
+  Form buildForm() {
+    return Form(
+        key: _formKey,
+        child: Column(children: [
+          Row(children: [
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+              child: TextFormField(
+                  controller: petName,
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  onFieldSubmitted: (_) => () {},
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.pets),
+                      labelText: "Pet Name",
+                      hintText: "Enter the pet's name"),
+                  validator: (petName) => petName != null && petName.isEmpty
+                      ? "Name cannot be empty"
+                      : null),
+            )),
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+              child: TextFormField(
+                  controller: dob,
+                  onFieldSubmitted: (_) => () {},
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  keyboardType: TextInputType.datetime,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Date of Birth",
+                      hintText: "Enter the pet's date of birth"),
+                  validator: (dob) => dob != null && dob.isEmpty
+                      ? "Date of birth cannot be empty"
+                      : null),
+            )),
+          ]),
+          Row(
+            children: [
               Flexible(
                   child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: TextFormField(
-                    controller: weight,
+                    controller: color,
                     onFieldSubmitted: (_) => () {},
                     style: const TextStyle(fontSize: 20, color: Colors.black),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: "Weight",
-                        hintText: "Enter the pet's weight"),
-                    validator: (weight) => weight != null && weight.isEmpty
-                        ? "Weight cannot be empty"
+                        labelText: "Color",
+                        hintText: "Enter the pet's color"),
+                    validator: (email) => email != null && email.isEmpty
+                        ? "Color cannot be empty"
                         : null),
               )),
-            ]),
-          ])));
+              Flexible(
+                  child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextFormField(
+                    controller: breed,
+                    onFieldSubmitted: (_) => () {},
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Breed",
+                        hintText: "Enter the pet's breed"),
+                    validator: (breed) => breed != null && breed.isEmpty
+                        ? "Breed cannot be empty"
+                        : null),
+              )),
+            ],
+          ),
+          Row(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+                  child: SizedBox(
+                    width: 1135,
+                    child: TextFormField(
+                        controller: playGroup,
+                        onFieldSubmitted: (_) => () {},
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.black),
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Play Group",
+                            hintText: "Enter the pet's play group"),
+                        validator: (playGroup) =>
+                            playGroup != null && playGroup.isEmpty
+                                ? "Play group cannot be empty"
+                                : null),
+                  )),
+            ],
+          ),
+          Row(children: [
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: TextFormField(
+                  controller: weight,
+                  onFieldSubmitted: (_) => () {},
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Weight",
+                      hintText: "Enter the pet's weight"),
+                  validator: (weight) => weight != null && weight.isEmpty
+                      ? "Weight cannot be empty"
+                      : null),
+            )),
+          ]),
+        ]));
+  }
+
   FutureBuilder<Pet> buildFutureBuilder() {
     return FutureBuilder<Pet>(
         future: _futurePet,
