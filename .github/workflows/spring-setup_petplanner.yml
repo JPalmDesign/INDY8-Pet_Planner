@@ -21,13 +21,11 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Gradle Build Action
-        uses: gradle/gradle-build-action@v2.4.0
-        with:
-          # Path to the root directory of the build
-          build-root-directory: '/backend'
-          # Path to the Gradle executable
-          gradle-executable: '$/backend/gradlew'
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+    
+      - name: Execute Gradle build
+        run: ./backend/gradlew build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
