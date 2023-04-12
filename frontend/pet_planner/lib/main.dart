@@ -4,6 +4,7 @@ import 'pages/login_page.dart';
 import 'package:flutter/services.dart';
 import 'package:pet_planner/pages/event_provider.dart';
 import 'package:provider/provider.dart';
+import 'pages/schedule_page.dart';
 
 const appScheme = 'flutterdemo';
 
@@ -84,9 +85,11 @@ class Login extends StatelessWidget {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight])
-      .then((value) => runApp(const MyApp()));
+  SystemChrome.setPreferredOrientations([
+    // DeviceOrientation.portraitUp,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight
+  ]).then((value) => runApp(const MyApp()));
   runApp(const MyApp());
 }
 
@@ -115,21 +118,29 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Auth0 Demo',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Auth0 Demo'),
-        ),
-        body: Center(
-          child: isBusy
-              ? const CircularProgressIndicator()
-              : _credentials != null
-                  ? Profile(logoutAction, _credentials?.user)
-                  : Login(loginAction, errorMessage),
-        ),
-      ),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => EventProvider(),
+        child: MaterialApp(
+            title: 'Pet Planner',
+            home: Scaffold(
+              body: Center(
+                child: isBusy
+                    ? const CircularProgressIndicator()
+                    : _credentials != null
+                        // Skip Login
+                        // ? SchedulePage()
+                        // : Login(loginAction, errorMessage),
+
+                        // Login to profile widget
+                        ? SchedulePage()
+                        // ? Profile(logoutAction, _credentials?.user)
+                        : Login(loginAction, errorMessage),
+
+                // Login to Schedule Page - Broken (no context)
+                // ? SchedulePage()
+                // : Login(loginAction, errorMessage),
+              ),
+            )));
   }
 
   Future<void> loginAction() async {
