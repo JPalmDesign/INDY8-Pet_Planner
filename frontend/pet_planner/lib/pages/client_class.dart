@@ -12,7 +12,7 @@ Future<Client> fetchClient() async {
   if (response.statusCode == 200) {
     return Client.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load pet');
+    throw Exception('Failed to load client.');
   }
 }
 
@@ -68,12 +68,21 @@ Future<Client> createClient(
           headers: <String, String>{
             'Content-Type': 'test/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{'firstName': firstName}));
+          body: jsonEncode(<String, String>{
+            'firstName': firstName,
+            'lastName': lastName,
+            'phoneNumber': phoneNumber,
+            'email': email,
+            'address': address,
+            'city': city,
+            'state': state,
+            'postalCode': postalCode
+          }));
 
   if (response.statusCode == 201) {
     // 201 = CREATED
     return Client.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create pet.');
+    throw Exception('Failed to create client.');
   }
 }

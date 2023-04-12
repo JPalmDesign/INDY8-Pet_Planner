@@ -12,7 +12,7 @@ Future<Feeding> fetchFeeding() async {
   if (response.statusCode == 200) {
     return Feeding.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load pet');
+    throw Exception('Failed to load feeding.');
   }
 }
 
@@ -59,12 +59,20 @@ Future<Feeding> createFeeding(
           headers: <String, String>{
             'Content-Type': 'test/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{'foodType': foodType}));
+          body: jsonEncode(<String, String>{
+            'foodType': foodType,
+            'foodBrand': foodBrand,
+            'quantity': quantity,
+            'measure': measure,
+            'timeOfDay': timeOfDay,
+            'medicine': medicine,
+            'dose': dose
+          }));
 
   if (response.statusCode == 201) {
     // 201 = CREATED
     return Feeding.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create pet.');
+    throw Exception('Failed to create feeding.');
   }
 }
