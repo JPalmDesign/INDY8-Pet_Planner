@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/pet_class.dart';
+import 'package:pet_planner/pages/feeding_class.dart';
 
-class ViewPetPage extends StatelessWidget {
+class ViewPetPage extends StatefulWidget {
   const ViewPetPage({super.key});
+
+  @override
+  State<ViewPetPage> createState() {
+    return _ViewPetPageState();
+  }
+}
+
+class _ViewPetPageState extends State<ViewPetPage> {
+  late Future<Pet> futurepet;
+  late Future<Feeding> futurefeed;
+
+  @override
+  void initState() {
+    super.initState();
+    futurepet = fetchPet();
+    futurefeed = fetchFeeding();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -28,6 +28,19 @@ class _NewClientPageState extends State<NewClientPage> {
   bool? isEmail = false;
 
   @override
+  void dispose() {
+    firstNameContr.dispose();
+    lastNameContr.dispose();
+    phoneNumContr.dispose();
+    emailContr.dispose();
+    streetAddressContr.dispose();
+    cityContr.dispose();
+    stateContr.dispose();
+    postalCodeContr.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: const Color(0xFFC6E2C3),
       appBar: AppBar(
@@ -45,19 +58,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () {
-                setState(() {
-                  _futureClient = createClient(firstNameContr.text
-                      //lastNameContr.text,
-                      //phoneNumContr.text,
-                      //emailContr.text,
-                      // streetAddressContr.text,
-                      // cityContr.text,
-                      // stateContr.text,
-                      // postalCodeContr.text
-                      );
-                });
-              },
+              onPressed: saveForm,
               icon: const Icon(
                 Icons.done,
                 color: Colors.black,
@@ -83,6 +84,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: firstNameContr,
+                    onFieldSubmitted: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -98,6 +100,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: lastNameContr,
+                    onFieldSubmitted: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -116,6 +119,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: emailContr,
+                  onFieldSubmitted: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
@@ -132,6 +136,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: phoneNumContr,
+                  onFieldSubmitted: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -184,6 +189,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 1135,
                     child: TextFormField(
                         controller: streetAddressContr,
+                        onFieldSubmitted: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -229,6 +235,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: cityContr,
+                        onFieldSubmitted: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -247,6 +254,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: stateContr,
+                        onFieldSubmitted: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -263,6 +271,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: postalCodeContr,
+                  onFieldSubmitted: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -289,6 +298,24 @@ class _NewClientPageState extends State<NewClientPage> {
       const DropdownMenuItem(value: "England", child: Text("England")),
     ];
     return menuItems;
+  }
+
+  Future saveForm() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (isValid) {
+      setState(() {
+        _futureClient = createClient(
+            firstNameContr.text,
+            lastNameContr.text,
+            phoneNumContr.text,
+            emailContr.text,
+            streetAddressContr.text,
+            cityContr.text,
+            stateContr.text,
+            postalCodeContr.text);
+      });
+    }
   }
 
   FutureBuilder<Client> buildFutureBuilder() {

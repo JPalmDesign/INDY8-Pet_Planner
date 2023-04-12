@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:pet_planner/pages/client_class.dart';
 
-class ViewClientPage extends StatelessWidget {
+class ViewClientPage extends StatefulWidget {
   const ViewClientPage({super.key});
+
+  @override
+  State<ViewClientPage> createState() {
+    return _ViewClientPageState();
+  }
+}
+
+class _ViewClientPageState extends State<ViewClientPage> {
+  late Future<Client> futureclient;
+
+  @override
+  void initState() {
+    super.initState();
+    futureclient = fetchClient();
+  }
 
   @override
   Widget build(BuildContext context) {

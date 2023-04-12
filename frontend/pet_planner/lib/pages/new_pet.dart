@@ -24,6 +24,17 @@ class _NewPetPageState extends State<NewPetPage> {
   TextEditingController weight = TextEditingController();
 
   @override
+  void dispose() {
+    petName.dispose();
+    breed.dispose();
+    color.dispose();
+    playGroup.dispose();
+    dob.dispose();
+    weight.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: const Color(0xFFC6E2C3),
       appBar: AppBar(
@@ -41,11 +52,7 @@ class _NewPetPageState extends State<NewPetPage> {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
-            onPressed: () {
-              setState(() {
-                _futurePet = createPet(petName.text);
-              });
-            },
+            onPressed: saveForm,
             icon: const Icon(
               Icons.done,
               color: Colors.black,
@@ -71,7 +78,7 @@ class _NewPetPageState extends State<NewPetPage> {
               child: TextFormField(
                   controller: petName,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  onFieldSubmitted: (_) => () {},
+                  onFieldSubmitted: (_) => saveForm(),
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.pets),
@@ -86,7 +93,7 @@ class _NewPetPageState extends State<NewPetPage> {
               padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
               child: TextFormField(
                   controller: dob,
-                  onFieldSubmitted: (_) => () {},
+                  onFieldSubmitted: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.datetime,
                   decoration: const InputDecoration(
@@ -105,7 +112,7 @@ class _NewPetPageState extends State<NewPetPage> {
                 padding: const EdgeInsets.all(20),
                 child: TextFormField(
                     controller: color,
-                    onFieldSubmitted: (_) => () {},
+                    onFieldSubmitted: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -120,7 +127,7 @@ class _NewPetPageState extends State<NewPetPage> {
                 padding: const EdgeInsets.all(20),
                 child: TextFormField(
                     controller: breed,
-                    onFieldSubmitted: (_) => () {},
+                    onFieldSubmitted: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -140,7 +147,7 @@ class _NewPetPageState extends State<NewPetPage> {
                     width: 1135,
                     child: TextFormField(
                         controller: playGroup,
-                        onFieldSubmitted: (_) => () {},
+                        onFieldSubmitted: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -160,7 +167,7 @@ class _NewPetPageState extends State<NewPetPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: weight,
-                  onFieldSubmitted: (_) => () {},
+                  onFieldSubmitted: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -176,6 +183,17 @@ class _NewPetPageState extends State<NewPetPage> {
             )),
           ]),
         ]));
+  }
+
+  Future saveForm() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (isValid) {
+      setState(() {
+        _futurePet = createPet(petName.text, breed.text, weight.text,
+            color.text, playGroup.text, dob.text);
+      });
+    }
   }
 
   FutureBuilder<Pet> buildFutureBuilder() {

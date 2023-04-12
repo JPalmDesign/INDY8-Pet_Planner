@@ -2,24 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<Feeding> createFeeding(
-  String foodType,
-  String foodBrand,
-  String color,
-  String weight,
-  String playGroup,
-  String dob,
-) async {
-  final response = await http.post(Uri.parse('url')), body;
-  jsonEncode(<String, String>{
-    'foodType': foodType,
-    // add the rest later
-  });
+// Tutorial (Send): https://docs.flutter.dev/cookbook/networking/send-data
+// Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
-  if (response.statusCode == 201) {
+Future<Feeding> fetchFeeding() async {
+  final response =
+      await http.get(Uri.parse('https://petplanner.azurewebsites.net/feeding'));
+
+  if (response.statusCode == 200) {
     return Feeding.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create pet.');
+    throw Exception('Failed to load pet');
   }
 }
 
@@ -50,5 +43,28 @@ class Feeding {
         timeOfDay: json['timeOfDay'],
         medicine: json['medicine'],
         dose: json['dose']);
+  }
+}
+
+Future<Feeding> createFeeding(
+    String foodType,
+    String foodBrand,
+    String quantity,
+    String measure,
+    String timeOfDay,
+    String medicine,
+    String dose) async {
+  final response =
+      await http.post(Uri.parse('https://petplanner.azurewebsites.net/feeding'),
+          headers: <String, String>{
+            'Content-Type': 'test/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{'foodType': foodType}));
+
+  if (response.statusCode == 201) {
+    // 201 = CREATED
+    return Feeding.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to create pet.');
   }
 }

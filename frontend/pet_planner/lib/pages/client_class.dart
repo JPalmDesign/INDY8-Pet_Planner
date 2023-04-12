@@ -2,6 +2,20 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+// Tutorial (Send): https://docs.flutter.dev/cookbook/networking/send-data
+// Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
+
+Future<Client> fetchClient() async {
+  final response =
+      await http.get(Uri.parse('https://petplanner.azurewebsites.net/client'));
+
+  if (response.statusCode == 200) {
+    return Client.fromJson(jsonDecode(response.body));
+  } else {
+    throw Exception('Failed to load pet');
+  }
+}
+
 class Client {
   final String firstName;
   final String lastName;
@@ -40,9 +54,17 @@ class Client {
   }
 }
 
-Future<Client> createClient(String firstName) async {
+Future<Client> createClient(
+    String firstName,
+    String lastName,
+    String phoneNumber,
+    String email,
+    String address,
+    String city,
+    String state,
+    String postalCode) async {
   final response =
-      await http.post(Uri.parse('https://petplanner.azurewebsites.net'),
+      await http.post(Uri.parse('https://petplanner.azurewebsites.net/client'),
           headers: <String, String>{
             'Content-Type': 'test/json; charset=UTF-8',
           },
