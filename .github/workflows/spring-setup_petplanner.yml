@@ -25,15 +25,15 @@ jobs:
         uses: gradle/gradle-build-action@v2.4.0
         with:
           # Path to the root directory of the build
-          build-root-directory: '${{ github.workspace}}/backend'
+          build-root-directory: '/backend'
           # Path to the Gradle executable
-          gradle-executable: '${{ github.workspace}}/backend/gradlew'
+          gradle-executable: '$/backend/gradlew'
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/backend/target/*.jar'
+          path: '/backend/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
