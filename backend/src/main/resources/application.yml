@@ -1,8 +1,0 @@
-auth0:
-  audience: https://pet-planner.com
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://dev-4ei56cif3obs4i6c.us.auth0.com/
