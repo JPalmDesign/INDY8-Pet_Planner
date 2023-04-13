@@ -8,6 +8,8 @@ group = 'com.indy8'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 jar.archiveFileName = 'app.jar'
+bootJar.archiveFileName = 'app.jar'
+
 
 repositories {
     mavenCentral()

@@ -27,7 +27,7 @@ jobs:
     
       - name: Execute Gradle build
         working-directory: ./backend
-        run: ./gradlew jar
+        run: ./gradlew bootJar
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
