@@ -2,7 +2,7 @@
     package="com.example.pet_planner">
    <application
         android:label="pet_planner"
-        android:name="${applicationName}"
+        android:name="android.app.Application"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
