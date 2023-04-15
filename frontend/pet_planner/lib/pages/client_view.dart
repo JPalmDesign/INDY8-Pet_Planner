@@ -56,7 +56,7 @@ class _ViewClientPageState extends State<ViewClientPage> {
               const Text("Jane Smith", // client.firstName, client.lastName
                   style: TextStyle(fontSize: 28, fontFamily: 'robotoBold')),
               Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Row(children: const [
                     Text("Pet(s): ",
                         style: TextStyle(
@@ -72,7 +72,7 @@ class _ViewClientPageState extends State<ViewClientPage> {
                             fontFamily: 'robotoMedium')) // client.phoneNumber
                   ])),
               Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Row(children: const [
                     Text("Email Address: ",
                         style: TextStyle(

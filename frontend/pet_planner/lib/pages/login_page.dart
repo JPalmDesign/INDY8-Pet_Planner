@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/forgot_password.dart';
 import 'package:pet_planner/pages/schedule_page.dart';
@@ -59,7 +57,7 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return ForgotPassword();
+                                return const ForgotPassword();
                               }));
                             },
                             child: const Text(
@@ -79,7 +77,7 @@ class LoginPage extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return SchedulePage();
+                                    return const SchedulePage();
                                   }));
                                 },
                                 child: const Text('Sign in',
@@ -92,7 +90,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return SignUp();
+                              return const SignUp();
                             }));
                           },
                           child: const Text("Don't have an account? Sign up!",

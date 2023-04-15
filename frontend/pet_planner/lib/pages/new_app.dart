@@ -31,7 +31,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
 
     if (widget.event == null) {
       fromDate = DateTime.now();
-      toDate = DateTime.now().add(Duration(hours: 2));
+      toDate = DateTime.now().add(const Duration(hours: 2));
     } else {
       final event = widget.event!;
 
@@ -70,10 +70,10 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 buildTitle(),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 buildDateTimePicker(),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                     child: TextFormField(
                       controller: desc,
                       maxLines: 12,
@@ -133,9 +133,9 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
   }
 
   Widget buildTitle() => Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
       child: TextFormField(
-        style: TextStyle(fontSize: 30),
+        style: const TextStyle(fontSize: 30),
         decoration: const InputDecoration(
             border: UnderlineInputBorder(), hintText: 'Add Name'),
         onFieldSubmitted: (_) => saveForm(),
@@ -194,9 +194,9 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
       ListTile(
         title: Text(
           text,
-          style: TextStyle(fontFamily: 'robotoRegular', fontSize: 20),
+          style: const TextStyle(fontFamily: 'robotoRegular', fontSize: 20),
         ),
-        leading: Icon(Icons.pets_outlined),
+        leading: const Icon(Icons.pets_outlined),
         trailing: const Icon(
           Icons.arrow_drop_down,
           color: Colors.black,
@@ -236,7 +236,7 @@ class _NewAppointmentPageState extends State<NewAppointmentPage> {
       if (isEditing) {
         provider.editEvent(event, widget.event!);
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => SchedulePage()));
+            MaterialPageRoute(builder: (context) => const SchedulePage()));
       } else {
         provider.addEvent(event);
       }

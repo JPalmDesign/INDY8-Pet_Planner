@@ -23,7 +23,7 @@ class AppViewingPage extends StatelessWidget {
             leading: const CloseButton(color: Colors.black),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 color: Colors.black,
                 onPressed: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -32,11 +32,11 @@ class AppViewingPage extends StatelessWidget {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 color: Colors.black,
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SchedulePage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const SchedulePage()));
                   final provider =
                       Provider.of<EventProvider>(context, listen: false);
                   provider.deleteEvent(event);
@@ -44,9 +44,9 @@ class AppViewingPage extends StatelessWidget {
               ),
             ]),
         body: ListView(
-          padding: EdgeInsets.all(32),
+          padding: const EdgeInsets.all(32),
           children: <Widget>[
-            SizedBox(height: 32),
+            const SizedBox(height: 32),
             Row(children: [
               const Icon(
                 Icons.pets,
@@ -88,7 +88,7 @@ Widget buildDateTime(Event event) {
           Row(
             children: [
               Padding(
-                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Row(children: [
                     const Text("End Time: ",
                         style: TextStyle(

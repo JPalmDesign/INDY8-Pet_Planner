@@ -13,7 +13,7 @@ class OldPetPage extends StatelessWidget {
               height: 75,
               child: AppBar(
                   backgroundColor: const Color(0xFFFFFFFF).withOpacity(.8),
-                  iconTheme: IconThemeData(color: Colors.black),
+                  iconTheme: const IconThemeData(color: Colors.black),
                   title: const Padding(
                     padding: EdgeInsets.fromLTRB(700, 0, 0, 0),
                     child: TextField(
@@ -73,7 +73,7 @@ class OldPetPage extends StatelessWidget {
                     ),
                     onPressed: () => Future(
                       () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ViewPetPage()),
+                        MaterialPageRoute(builder: (_) => const ViewPetPage()),
                       ),
                     ),
                   )))

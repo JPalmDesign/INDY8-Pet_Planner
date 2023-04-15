@@ -32,7 +32,7 @@ class _ViewPetPageState extends State<ViewPetPage> {
               height: 75,
               child: AppBar(
                   backgroundColor: const Color(0xFFFFFFFF).withOpacity(.8),
-                  iconTheme: IconThemeData(color: Colors.black),
+                  iconTheme: const IconThemeData(color: Colors.black),
                   actions: const [
                     Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
@@ -68,7 +68,7 @@ class _ViewPetPageState extends State<ViewPetPage> {
                             fontFamily: 'robotoMedium')) // pet.breed
                   ])),
               Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Row(children: const [
                     Text("Color: ",
                         style: TextStyle(

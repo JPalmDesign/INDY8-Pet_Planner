@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pet_planner/pages/schedule_page.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/feeding_class.dart';
 
 class NewFeedingPage extends StatefulWidget {
-  NewFeedingPage({super.key});
+  const NewFeedingPage({super.key});
 
   @override
   State<NewFeedingPage> createState() {

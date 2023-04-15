@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/client_view.dart';
-import 'package:pet_planner/pages/new_client.dart';
-import 'package:pet_planner/pages/client_class.dart';
 
 /*
  This might be helpful: https://blog.codemagic.io/rest-api-in-flutter/
@@ -80,11 +78,11 @@ class OldClientPage extends StatelessWidget {
                     ),
                     onPressed: () => Future(
                       () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ViewClientPage()),
+                        MaterialPageRoute(
+                            builder: (_) => const ViewClientPage()),
                       ),
                     ),
                   )))
         ]));
   }
 }
-

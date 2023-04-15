@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:pet_planner/pages/forgot_password.dart';
-import 'package:pet_planner/pages/login_page.dart';
 import 'package:pet_planner/pages/sign_up.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -65,7 +61,7 @@ class ForgotPassword extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return SignUp();
+                                return const SignUp();
                               }));
                             },
                             child: const Text("Don't have an account? Sign up!",
