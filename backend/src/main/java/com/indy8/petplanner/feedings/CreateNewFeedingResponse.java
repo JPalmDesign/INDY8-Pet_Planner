@@ -1,8 +1,9 @@
 package com.indy8.petplanner.feedings;
 
-public class FeedingByIdResponse {
+import java.time.LocalDate;
+
+public class CreateNewFeedingResponse {
     private int id;
-    private int petId;
     private String foodType; // Kibble, Canned
     private String brand;
     private String quantity;
@@ -11,20 +12,10 @@ public class FeedingByIdResponse {
     private String medicines;
     private String dose;
     private String name;               // Might be a compiled field of PetName, timeOfDay
-    public FeedingByIdResponse() {
 
-    }
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}
-
-    public int getPetId() {
-        return petId;
-    }
-
-    public void setPetId(int petId) {
-        this.petId = petId;
-    }
 
     public String getFoodType() {return foodType;}
 

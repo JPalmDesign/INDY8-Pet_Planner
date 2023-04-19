@@ -2,6 +2,7 @@ package com.indy8.petplanner.config;
 
 import com.indy8.petplanner.clients.ClientByIdResponse;
 import com.indy8.petplanner.clients.ClientPet;
+import com.indy8.petplanner.clients.ClientDocument;
 import com.indy8.petplanner.clients.CreateNewClientRequest;
 import com.indy8.petplanner.clients.CreateNewClientResponse;
 import com.indy8.petplanner.domain.Client;
@@ -32,6 +33,15 @@ public class ClientMapper {
         }).collect(Collectors.toList());
 
         response.setClientPetList(pets);
+
+        List<ClientDocument> documents = client.getDocuments().stream().map(document -> {
+            var clientDocument = new ClientDocument();
+            clientDocument.setId(document.getId());
+            clientDocument.setName(document.getName());
+            return clientDocument;
+        }).collect(Collectors.toList());
+
+        response.setClientDocumentList(documents);
         return response;
     }
 

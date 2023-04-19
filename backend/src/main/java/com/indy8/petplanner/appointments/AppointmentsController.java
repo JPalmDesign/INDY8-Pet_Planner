@@ -3,14 +3,12 @@ package com.indy8.petplanner.appointments;
 import com.indy8.petplanner.config.AppointmentMapper;
 import com.indy8.petplanner.dataaccess.AppointmentRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
+@RestController
 public class AppointmentsController {
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;

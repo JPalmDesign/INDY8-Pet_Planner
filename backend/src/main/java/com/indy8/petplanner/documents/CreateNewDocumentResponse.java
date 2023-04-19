@@ -2,21 +2,17 @@ package com.indy8.petplanner.documents;
 
 import java.time.LocalDateTime;
 
-public  class DocumentByIdResponse {
-    private Integer id;
+public class CreateNewDocumentResponse {
+    private int id;
     private String recordType;
     private LocalDateTime uploadDateTime;
-    private String name;  //We are not able to implement the scan feature in time
+    private String name;  //Are not able to implement the scan feature in time
 
-    public DocumentByIdResponse() {
-
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -44,4 +40,3 @@ public  class DocumentByIdResponse {
         this.name = name;
     }
 }
-

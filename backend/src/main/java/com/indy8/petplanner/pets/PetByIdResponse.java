@@ -1,9 +1,13 @@
 package com.indy8.petplanner.pets;
 
+import com.indy8.petplanner.clients.ClientPet;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public  class PetByIdResponse {
+public class PetByIdResponse {
     private Integer id;
     private int clientId;
     private String name;
@@ -13,6 +17,12 @@ public  class PetByIdResponse {
     private String weight;
     private String playgroup;
     private LocalDate dateOfBirth;
+
+    private List<PetDocument> petDocumentList = new ArrayList<>();
+
+    private List<PetAppointment> petAppointmentList = new ArrayList<>();
+
+    private List<PetFeeding> petFeedingList = new ArrayList<>();
 
     public PetByIdResponse() {
         
@@ -88,5 +98,29 @@ public  class PetByIdResponse {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public List<PetDocument> getPetDocumentList() {
+        return petDocumentList;
+    }
+
+    public void setPetDocumentList(List<PetDocument> petDocumentList) {
+        this.petDocumentList = petDocumentList;
+    }
+
+    public List<PetAppointment> getPetAppointmentList() {
+        return petAppointmentList;
+    }
+
+    public void setPetAppointmentList(List<PetAppointment> petAppointmentList) {
+        this.petAppointmentList = petAppointmentList;
+    }
+
+    public List<PetFeeding> getPetFeedingList() {
+        return petFeedingList;
+    }
+
+    public void setPetFeedingList(List<PetFeeding> petFeedingList) {
+        this.petFeedingList = petFeedingList;
     }
 }

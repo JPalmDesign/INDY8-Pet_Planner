@@ -24,6 +24,12 @@ public class Pet {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pet")
     private List<Appointment> appointments = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pet")
+    private List<Document> documents = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pet")
+    private List<Feeding> feedings = new ArrayList<>();
+
     @ManyToOne
     private Client client;
 
@@ -100,14 +106,55 @@ public class Pet {
         this.client = client;
     }
 
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
     public void addAppointment(Appointment appointment) {
         appointments.add(appointment);
         appointment.setPet(this);
     }
 
-    public void removePet(Appointment appointment) {
+    public void removeAppointment(Appointment appointment) {
         appointments.remove(appointment);
         appointment.setPet(null);
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    public void addDocument(Document document) {
+        documents.add(document);
+        document.setPet(this);
+    }
+
+    public void removeDocument(Document document) {
+        documents.remove(document);
+        document.setPet(null);
+    }
+
+    public List<Feeding> getFeedings() {
+        return feedings;
+    }
+    public void setFeedings(List<Feeding> feedings) {
+        this.feedings = feedings;
+    }
+    public void addFeeding(Feeding feeding) {
+        feedings.add(feeding);
+        feeding.setPet(this);
+    }
+    public void removeFeeding(Feeding feeding) {
+        feedings.remove(feeding);
+        feeding.setPet(null);
     }
 
     @Override

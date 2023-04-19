@@ -11,8 +11,8 @@ public class AppointmentMapper {
 
         response.setId(appointment.getId());
         response.setAppointmentType(appointment.getAppointmentType());
-        response.setStartTime(appointment.getStartTime());
-        response.setEndTime(appointment.getEndTime());
+        response.setStartTime(appointment.getStartDateTime());
+        response.setEndTime(appointment.getEndDateTime());
         response.setCostPerUnit(appointment.getCostPerUnit());
         response.setTotalCost(appointment.totalCost());
 
@@ -23,8 +23,8 @@ public class AppointmentMapper {
 
         response.setId(appointment.getId());
         response.setAppointmentType(appointment.getAppointmentType());
-        response.setStartTime(appointment.getStartTime());
-        response.setEndTime(appointment.getEndTime());
+        response.setStartTime(appointment.getStartDateTime());
+        response.setEndTime(appointment.getEndDateTime());
         response.setCostPerUnit(appointment.getCostPerUnit());
         response.setTotalCost(appointment.totalCost());
 
@@ -34,8 +34,8 @@ public class AppointmentMapper {
         var appointment = new Appointment();
 
         appointment.setAppointmentType(request.getAppointmentType());
-        appointment.setStartTime(request.getStartTime());
-        appointment.setEndTime(request.getEndTime());
+        appointment.setStartDateTime(request.getStartTime());
+        appointment.setEndDateTime(request.getEndTime());
         appointment.setCostPerUnit(request.getCostPerUnit());
 
         return appointment;

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 public class Client {
-    // TODO: Update with Email, Preferred Contact type and Country. (are you sure we want to country?)
+    // TODO: Update with Email, and Preferred Contact type
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;                     //Auto generate unique identifier
@@ -15,14 +15,19 @@ public class Client {
     private char middleInitial;
     private String lastName;
     private long phoneNumber;
+    private String email;
     private String addressLine1;
     private String addressLine2;
     private String city;
     private String state;               //Need UI to code the list of states as a drop down list
     private int zip;
+    private String preferredContactType;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
-    private List<Pet> pets = new ArrayList<>();// Auto generate a random 8 digit/alpha string with C at the front
+    private List<Pet> pets = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "client")
+    private List<Document> documents = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -64,6 +69,10 @@ public class Client {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
+
     public String getAddressLine1() {
         return addressLine1;
     }
@@ -104,21 +113,38 @@ public class Client {
         this.zip = zip;
     }
 
+    public String getPreferredContactType() {return preferredContactType;}
+
+    public void setPreferredContactType(String preferredContactType) {this.preferredContactType = preferredContactType;}
+    //End of getters and setters for attributes
+
     public List<Pet> getPets() {
         return pets;
     }
-
     public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
-
     public void addPet(Pet pet) {
         pets.add(pet);
         pet.setClient(this);
     }
-
     public void removePet(Pet pet) {
         pets.remove(pet);
         pet.setClient(null);
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+    public void addDocument(Document document) {
+        documents.add(document);
+        document.setClient(this);
+    }
+    public void removeDocument(Document document) {
+        documents.remove(document);
+        document.setClient(null);
     }
 }

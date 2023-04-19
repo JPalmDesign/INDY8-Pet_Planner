@@ -17,6 +17,8 @@ public class ClientByIdResponse {
 
     private List<ClientPet> clientPetList = new ArrayList<>();
 
+    private List<ClientDocument> clientDocumentList = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }
@@ -103,5 +105,13 @@ public class ClientByIdResponse {
 
     public void setClientPetList(List<ClientPet> clientPetList) {
         this.clientPetList = clientPetList;
+    }
+
+    public List<ClientDocument> getClientDocumentList() {
+        return clientDocumentList;
+    }
+
+    public void setClientDocumentList(List<ClientDocument> clientDocumentList) {
+        this.clientDocumentList = clientDocumentList;
     }
 }

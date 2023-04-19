@@ -7,11 +7,6 @@ import org.springframework.context.annotation.Configuration;
 public class MapperConfig {
 
     @Bean
-    public PetMapper petMapper() {
-        return new PetMapper();
-    }
-
-    @Bean
     public AppointmentMapper appointmentMapper() {
         return new AppointmentMapper();
     }
@@ -20,4 +15,13 @@ public class MapperConfig {
     public ClientMapper clientMapper() {
         return new ClientMapper();
     }
+
+    @Bean
+    public DocumentMapper documentMapper() {return new DocumentMapper();}
+
+    @Bean
+    public FeedingMapper feedingMapper() {return new FeedingMapper();}
+
+    @Bean
+    public PetMapper petMapper() {return new PetMapper();}
 }

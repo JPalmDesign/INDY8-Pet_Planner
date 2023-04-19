@@ -2,9 +2,13 @@ package com.indy8.petplanner.clients;
 
 import com.indy8.petplanner.config.ClientMapper;
 import com.indy8.petplanner.dataaccess.ClientRepository;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class ClientsController {
@@ -18,7 +22,17 @@ public class ClientsController {
     }
 
     @GetMapping("/client")
-    public ClientByIdResponse getClientById(@RequestParam(value = "id") Integer id) {
+    public List<ClientByIdResponse> getAllClients() {
+        var dbResult = clientRepository.findAll();
+        var response = new ArrayList<ClientByIdResponse>();
+        for(var client : dbResult) {
+            response.add(this.clientMapper.mapClientToClientByIdResponse(client));
+        }
+        return response;
+    }
+
+    @GetMapping("/client/{id}")
+    public ClientByIdResponse getClientById(@PathParam(value = "id") Integer id) {
         var dbResult = clientRepository.findById(id);
         if(dbResult.isEmpty()) {
             throw new ResponseStatusException(
