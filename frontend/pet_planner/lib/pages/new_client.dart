@@ -4,16 +4,17 @@ import 'dart:async';
 import 'package:pet_planner/pages/client_class.dart';
 
 class NewClientPage extends StatefulWidget {
-  const NewClientPage({super.key});
+  const NewClientPage({Key? key}) : super(key: key);
 
   @override
-  State<NewClientPage> createState() {
-    return _NewClientPageState();
-  }
+  /* State<NewClientPage> createState() {
+    return _NewClientPageState(); */
+
+  State<StatefulWidget> createState() => _NewClientPageState();
 }
 
 class _NewClientPageState extends State<NewClientPage> {
-  Future<Client>? _futureClient;
+  Future<Client>? futureClient;
   final _formKey = GlobalKey<FormState>();
   TextEditingController firstNameContr = TextEditingController();
   TextEditingController lastNameContr = TextEditingController();
@@ -70,13 +71,13 @@ class _NewClientPageState extends State<NewClientPage> {
             ),
           ]),
       body: Container(
-        child: (_futureClient == null ? buildForm() : buildFutureBuilder()),
+        child: (futureClient == null ? buildForm() : buildFutureBuilder()),
       ));
 
   Form buildForm() {
     return Form(
         key: _formKey,
-        child: Column(children: [
+        child: Column(children: <Widget>[
           Row(
             children: [
               Flexible(
@@ -84,7 +85,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: firstNameContr,
-                    onFieldSubmitted: (_) => saveForm(),
+                    onSaved: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -100,7 +101,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: lastNameContr,
-                    onFieldSubmitted: (_) => saveForm(),
+                    onSaved: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -119,7 +120,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: emailContr,
-                  onFieldSubmitted: (_) => saveForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
@@ -136,7 +137,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: phoneNumContr,
-                  onFieldSubmitted: (_) => saveForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -189,7 +190,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 1135,
                     child: TextFormField(
                         controller: streetAddressContr,
-                        onFieldSubmitted: (_) => saveForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -235,7 +236,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: cityContr,
-                        onFieldSubmitted: (_) => saveForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -254,7 +255,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: stateContr,
-                        onFieldSubmitted: (_) => saveForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -271,7 +272,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: postalCodeContr,
-                  onFieldSubmitted: (_) => saveForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -305,7 +306,7 @@ class _NewClientPageState extends State<NewClientPage> {
 
     if (isValid) {
       setState(() {
-        _futureClient = createClient(
+        futureClient = createClient(
             firstNameContr.text,
             lastNameContr.text,
             phoneNumContr.text,
@@ -320,7 +321,7 @@ class _NewClientPageState extends State<NewClientPage> {
 
   FutureBuilder<Client> buildFutureBuilder() {
     return FutureBuilder<Client>(
-        future: _futureClient,
+        future: futureClient,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Text(snapshot.data!.firstName);

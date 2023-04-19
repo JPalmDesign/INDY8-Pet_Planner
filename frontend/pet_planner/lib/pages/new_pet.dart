@@ -186,13 +186,10 @@ class _NewPetPageState extends State<NewPetPage> {
 
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
-
-    if (isValid) {
-      setState(() {
-        _futurePet = createPet(petName.text, breed.text, weight.text,
-            color.text, playGroup.text, dob.text);
-      });
-    }
+    setState(() {
+      _futurePet = createPet(petName.text, breed.text, weight.text, color.text,
+          playGroup.text, dob.text);
+    });
   }
 
   FutureBuilder<Pet> buildFutureBuilder() {

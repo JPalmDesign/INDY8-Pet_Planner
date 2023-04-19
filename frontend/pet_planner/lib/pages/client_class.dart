@@ -20,7 +20,7 @@ class Client {
   final String firstName;
   final String lastName;
   final String phoneNumber;
-  final String email;
+  //final String email;
   final String address;
   final String city;
   final String state;
@@ -32,7 +32,7 @@ class Client {
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
-    required this.email,
+    //required this.email,
     required this.address,
     required this.city,
     required this.state,
@@ -46,7 +46,7 @@ class Client {
         firstName: json['firstName'],
         lastName: json['lastName'],
         phoneNumber: json['phoneNumber'],
-        email: json['email'],
+        //email: json['email'],
         address: json['address'],
         city: json['city'],
         state: json['state'],
@@ -66,17 +66,19 @@ Future<Client> createClient(
   final response =
       await http.post(Uri.parse('https://petplanner.azurewebsites.net/client'),
           headers: <String, String>{
-            'Content-Type': 'test/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{
+          body: jsonEncode(<String, dynamic>{
             'firstName': firstName,
+            'middleInitial': "",
             'lastName': lastName,
             'phoneNumber': phoneNumber,
             'email': email,
-            'address': address,
+            'addressLine1': address,
+            'addressLine2': "",
             'city': city,
             'state': state,
-            'postalCode': postalCode
+            'zip': postalCode
           }));
 
   if (response.statusCode == 201) {
