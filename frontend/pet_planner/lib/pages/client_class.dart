@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 // Tutorial (Send): https://docs.flutter.dev/cookbook/networking/send-data
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
-Future<Client> fetchClient() async {
+/* Future<Client> fetchClient() async {
   final response =
       await http.get(Uri.parse('https://petplanner.azurewebsites.net/client'));
 
@@ -14,7 +14,7 @@ Future<Client> fetchClient() async {
   } else {
     throw Exception('Failed to load client.');
   }
-}
+} */
 
 class Client {
   final String firstName;
@@ -45,12 +45,12 @@ class Client {
     return Client(
         firstName: json['firstName'],
         lastName: json['lastName'],
-        phoneNumber: json['phoneNumber'],
+        phoneNumber: json['phoneNumber'].toString(),
         //email: json['email'],
-        address: json['address'],
+        address: json['addressLine1'],
         city: json['city'],
         state: json['state'],
-        postalCode: json['postalCode']);
+        postalCode: json['postalCode'].toString());
   }
 }
 
@@ -81,7 +81,7 @@ Future<Client> createClient(
             'zip': postalCode
           }));
 
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
     // 201 = CREATED
     return Client.fromJson(jsonDecode(response.body));
   } else {

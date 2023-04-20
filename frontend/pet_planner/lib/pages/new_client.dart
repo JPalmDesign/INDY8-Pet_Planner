@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/client_class.dart';
+import 'package:pet_planner/pages/schedule_page.dart';
+
+import 'exist_client.dart';
 
 class NewClientPage extends StatefulWidget {
   const NewClientPage({Key? key}) : super(key: key);
 
   @override
-  /* State<NewClientPage> createState() {
-    return _NewClientPageState(); */
-
   State<StatefulWidget> createState() => _NewClientPageState();
 }
 
@@ -59,7 +59,11 @@ class _NewClientPageState extends State<NewClientPage> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: saveForm,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return (const SchedulePage());
+                }));
+              },
               icon: const Icon(
                 Icons.done,
                 color: Colors.black,
@@ -71,7 +75,7 @@ class _NewClientPageState extends State<NewClientPage> {
             ),
           ]),
       body: Container(
-        child: (futureClient == null ? buildForm() : buildFutureBuilder()),
+        child: (buildForm()),
       ));
 
   Form buildForm() {
@@ -317,19 +321,5 @@ class _NewClientPageState extends State<NewClientPage> {
             postalCodeContr.text);
       });
     }
-  }
-
-  FutureBuilder<Client> buildFutureBuilder() {
-    return FutureBuilder<Client>(
-        future: futureClient,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.firstName);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-
-          return const CircularProgressIndicator();
-        });
   }
 }

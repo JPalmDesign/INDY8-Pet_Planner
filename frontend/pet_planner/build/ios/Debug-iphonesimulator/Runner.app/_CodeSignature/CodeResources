@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		Lg+bqvGc0s3pw2piit+bgYMBl18=
+		srt7YNqNMqb54ZBVSjHuggDYKnI=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		052XhW2l8JTPAC+HkkxH9v0/kNA=
+		BzvaaqdZkE/GYR09PtPSy7iiA9s=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		LGsVFxYfzxUhGI/V1af9BZoZF8Y=
+		0DjcW0H5WGwUt7bYxbd5h4/6UiM=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/lib/fonts/Roboto/Roboto-Black.ttf</key>
 		<data>
@@ -369,7 +369,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zZJfdhg05gjAmVfLs+rUio74zjpO/5klHUfnFLaTrcQ=
+			x5SRgfa6zB+gWcvDYRVse6uC7P3OrbJEACElNGNyDog=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -383,7 +383,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			x7Y/VgS291ieZmqsVa8i5Poc75VsYOfAr3UvE24ILyA=
+			03PyCHKbt1aEr0vafcNeXoUSZiAPvTSj7liLi+xccBk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -425,7 +425,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			wi6ULoX3xB8LTmzoNAhHJqFIdTDoEAA+hfhCg9tmoUs=
+			hGETurCIDchNiOdWSf/rQ07eQHF/K16xsOkfZHYTH/E=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/lib/fonts/Roboto/Roboto-Black.ttf</key>

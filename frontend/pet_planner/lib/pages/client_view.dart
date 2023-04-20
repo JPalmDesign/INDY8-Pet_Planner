@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:pet_planner/pages/client_class.dart';
 
 class ViewClientPage extends StatefulWidget {
-  const ViewClientPage({super.key});
+  const ViewClientPage({Key? key}) : super(key: key);
 
   @override
-  State<ViewClientPage> createState() {
-    return _ViewClientPageState();
-  }
+  _ViewClientPageState createState() => _ViewClientPageState();
 }
 
 class _ViewClientPageState extends State<ViewClientPage> {
-  late Future<Client> futureclient;
+  List<dynamic> data = [];
+
+  Future<void> fetchClient() async {
+    final response = await http
+        .get(Uri.parse('https://petplanner.azurewebsites.net/client'));
+
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      setState(() {
+        data = parsed;
+      });
+    } else {
+      throw Exception('Failed to load client.');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    futureclient = fetchClient();
+    fetchClient();
   }
 
   @override
@@ -43,83 +58,103 @@ class _ViewClientPageState extends State<ViewClientPage> {
                     "View Client",
                     style: TextStyle(color: Colors.black),
                   )))),
-          Column(
-            children: [
-              const Center(
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                    child: Icon(
-                      Icons.account_circle,
-                      size: 75,
-                    )),
-              ),
-              const Text("Jane Smith", // client.firstName, client.lastName
-                  style: TextStyle(fontSize: 28, fontFamily: 'robotoBold')),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Pet(s): ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // will display pets
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Phone Number: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // client.phoneNumber
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Email Address: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // client.email
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Street Address: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')), // client.address
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("City: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // client.city
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("State: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // client.state
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Postal Code: ",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'robotoMedium')) // client.postalCode
-                  ])),
-              Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: const [
-                    Text("Preferred Contact Method: ",
-                        style:
-                            TextStyle(fontSize: 20, fontFamily: 'robotoMedium'))
-                  ]))
-            ],
-          ),
+          SingleChildScrollView(
+              child: ListView.builder(
+                  addRepaintBoundaries: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        const Center(
+                          child: Padding(
+                              padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+                              child: Icon(
+                                Icons.account_circle,
+                                size: 75,
+                              )),
+                        ),
+                        Text(
+                            data.isNotEmpty
+                                ? data[index]['firstName']
+                                : '', // client.firstName, client.lastName
+                            style: TextStyle(
+                                fontSize: 28, fontFamily: 'robotoBold')),
+                        Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("Pet(s): ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')) // will display pets
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: [
+                              Text("Phone Number: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'robotoMedium')),
+                              Text(data.isNotEmpty
+                                  ? data[0]['phoneNumber'].toString()
+                                  : '') // client.phoneNumber
+                            ])),
+                        Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("Email Address: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')) // client.email
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("Street Address: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')), // client.address
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("City: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')) // client.city
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("State: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')) // client.state
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("Postal Code: ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily:
+                                          'robotoMedium')) // client.postalCode
+                            ])),
+                        Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(children: const [
+                              Text("Preferred Contact Method: ",
+                                  style: TextStyle(
+                                      fontSize: 20, fontFamily: 'robotoMedium'))
+                            ]))
+                      ],
+                    );
+                  }))
         ],
       ),
     );
