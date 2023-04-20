@@ -40,7 +40,7 @@ class _OldClientPageState extends State<OldClientPage> {
         fetchClient();
       });
     } else {
-      print('Failed to delete client.');
+      throw Exception('Failed to delete client.');
     }
   }
 
@@ -98,111 +98,96 @@ class _OldClientPageState extends State<OldClientPage> {
                           shrinkWrap: true,
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                                padding: EdgeInsets.all(20),
-                                child: SizedBox(
-                                  width: 1035,
-                                  height: height,
-                                  child: TextButton(
-                                    onPressed: () => expandButton(index),
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: const Color(0xFFAEB2C5),
-                                      shadowColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: <Widget>[
-                                            const SizedBox(
-                                                height: 80, width: 10),
-                                            Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 20, 20, 20),
-                                                child: Column(children: [
-                                                  Row(children: [
-                                                    const Icon(
-                                                      Icons.account_circle,
-                                                      color: Colors.black,
-                                                      size: 30,
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Text(
-                                                        data.isNotEmpty
-                                                            ? data[index]
-                                                                ['firstName']
-                                                            : '',
-                                                        style: const TextStyle(
-                                                            fontSize: 24,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'robotoMedium')),
-                                                    const Text(" "),
-                                                    Text(
-                                                        data.isNotEmpty
-                                                            ? data[index]
-                                                                ['lastName']
-                                                            : '',
-                                                        style: const TextStyle(
-                                                            fontSize: 24,
-                                                            color: Colors.black,
-                                                            fontFamily:
-                                                                'robotoMedium')),
-                                                    const SizedBox(width: 20),
-                                                    IconButton(
-                                                      icon: Icon(Icons.edit),
-                                                      onPressed: () {},
-                                                      color: Colors.black,
-                                                    ),
-                                                    const SizedBox(width: 5),
-                                                    IconButton(
-                                                      icon: Icon(Icons.delete),
-                                                      color: Colors.black,
-                                                      onPressed: () {
-                                                        deleteClient(
-                                                            data[index]['id']);
-                                                      },
-                                                    ),
-                                                  ]),
-                                                  Visibility(
-                                                      visible: _isExpanded,
-                                                      child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(children: [
-                                                              const Text(
-                                                                  "Phone Number: ",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                              Text(
-                                                                  data.isNotEmpty
-                                                                      ? data[index]
-                                                                              [
-                                                                              'phoneNumber']
-                                                                          .toString()
-                                                                      : '',
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                            ]),
-                                                            Row(
-                                                              children: [
+                            if (data[index] == null) {
+                              return Container(
+                                  child: Text('No data available'));
+                            } else {
+                              return Padding(
+                                  padding: EdgeInsets.all(20),
+                                  child: SizedBox(
+                                    width: 1035,
+                                    height: height,
+                                    child: TextButton(
+                                      onPressed: () => expandButton(index),
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFFAEB2C5),
+                                        shadowColor: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0)),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: <Widget>[
+                                              const SizedBox(
+                                                  height: 80, width: 10),
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 20, 20, 20),
+                                                  child: Column(children: [
+                                                    Row(children: [
+                                                      const Icon(
+                                                        Icons.account_circle,
+                                                        color: Colors.black,
+                                                        size: 30,
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Text(
+                                                          data.isNotEmpty
+                                                              ? data[index][
+                                                                      'firstName']
+                                                                  .toString()
+                                                              : '',
+                                                          style: const TextStyle(
+                                                              fontSize: 24,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontFamily:
+                                                                  'robotoMedium')),
+                                                      const Text(" "),
+                                                      Text(
+                                                          data.isNotEmpty
+                                                              ? data[index][
+                                                                      'lastName']
+                                                                  .toString()
+                                                              : '',
+                                                          style: const TextStyle(
+                                                              fontSize: 24,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontFamily:
+                                                                  'robotoMedium')),
+                                                      const SizedBox(width: 20),
+                                                      IconButton(
+                                                        icon: Icon(Icons.edit),
+                                                        onPressed: () {},
+                                                        color: Colors.black,
+                                                      ),
+                                                      const SizedBox(width: 5),
+                                                      IconButton(
+                                                        icon:
+                                                            Icon(Icons.delete),
+                                                        color: Colors.black,
+                                                        onPressed: () {
+                                                          deleteClient(
+                                                              data[index]
+                                                                  ['id']);
+                                                        },
+                                                      ),
+                                                    ]),
+                                                    Visibility(
+                                                        visible: _isExpanded,
+                                                        child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(children: [
                                                                 const Text(
-                                                                    "Address: ",
+                                                                    "Phone Number: ",
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             18,
@@ -212,63 +197,7 @@ class _OldClientPageState extends State<OldClientPage> {
                                                                             'robotoMedium')),
                                                                 Text(
                                                                     data.isNotEmpty
-                                                                        ? data[index]
-                                                                            [
-                                                                            'addressLine1']
-                                                                        : '',
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontFamily:
-                                                                            'robotoMedium')),
-                                                                Text(", "),
-                                                                Text(
-                                                                    data.isNotEmpty
-                                                                        ? data[index]
-                                                                            [
-                                                                            'city']
-                                                                        : '',
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontFamily:
-                                                                            'robotoMedium')),
-                                                                const Text(", ",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontFamily:
-                                                                            'robotoMedium')),
-                                                                Text(
-                                                                    data.isNotEmpty
-                                                                        ? data[index]
-                                                                            [
-                                                                            'state']
-                                                                        : '',
-                                                                    style: const TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontFamily:
-                                                                            'robotoMedium')),
-                                                                const Text(" ",
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            18,
-                                                                        fontFamily:
-                                                                            'robotoMedium')),
-                                                                Text(
-                                                                    data.isNotEmpty
-                                                                        ? data[index]['zip']
+                                                                        ? data[index]['phoneNumber']
                                                                             .toString()
                                                                         : '',
                                                                     style: const TextStyle(
@@ -277,17 +206,97 @@ class _OldClientPageState extends State<OldClientPage> {
                                                                         fontSize:
                                                                             18,
                                                                         fontFamily:
-                                                                            'robotoMedium'))
-                                                              ],
-                                                            )
-                                                          ]))
-                                                ]))
-                                          ],
-                                        ),
-                                      ],
+                                                                            'robotoMedium')),
+                                                              ]),
+                                                              Row(
+                                                                children: [
+                                                                  const Text(
+                                                                      "Address: ",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              18,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  Text(
+                                                                      data.isNotEmpty
+                                                                          ? data[index]['addressLine1']
+                                                                              .toString()
+                                                                          : '',
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  Text(", "),
+                                                                  Text(
+                                                                      data.isNotEmpty
+                                                                          ? data[index]['city']
+                                                                              .toString()
+                                                                          : '',
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  const Text(
+                                                                      ", ",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  Text(
+                                                                      data.isNotEmpty
+                                                                          ? data[index]['state']
+                                                                              .toString()
+                                                                          : '',
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  const Text(
+                                                                      " ",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
+                                                                  Text(
+                                                                      data.isNotEmpty
+                                                                          ? data[index]['zip']
+                                                                              .toString()
+                                                                          : '',
+                                                                      style: const TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium'))
+                                                                ],
+                                                              )
+                                                            ]))
+                                                  ]))
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ));
+                                  ));
+                            }
                           }))))
         ]));
   }
