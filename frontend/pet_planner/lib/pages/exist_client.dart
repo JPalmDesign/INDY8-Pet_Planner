@@ -122,17 +122,18 @@ class _OldClientPageState extends State<OldClientPage> {
                                           children: <Widget>[
                                             const SizedBox(
                                                 height: 80, width: 10),
-                                            const Icon(
-                                              Icons.account_circle,
-                                              color: Colors.black,
-                                              size: 30,
-                                            ),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         10, 20, 20, 20),
                                                 child: Column(children: [
                                                   Row(children: [
+                                                    Icon(
+                                                      Icons.account_circle,
+                                                      color: Colors.black,
+                                                      size: 30,
+                                                    ),
+                                                    SizedBox(width: 10),
                                                     Text(
                                                         data.isNotEmpty
                                                             ? data[index]
