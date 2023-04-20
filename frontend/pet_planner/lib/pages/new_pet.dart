@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/pet_class.dart';
+import 'package:pet_planner/pages/schedule_page.dart';
 
 class NewPetPage extends StatefulWidget {
-  const NewPetPage({super.key});
+  const NewPetPage({Key? key}) : super(key: key);
 
   @override
-  State<NewPetPage> createState() {
-    return _NewPetPageState();
-  }
+  State<StatefulWidget> createState() => _NewPetPageState();
 }
 
 class _NewPetPageState extends State<NewPetPage> {
-  Future<Pet>? _futurePet;
+  Future<Pet>? futurePet;
   final _formKey = GlobalKey<FormState>();
   TextEditingController petName = TextEditingController();
   TextEditingController breed = TextEditingController();
@@ -21,6 +20,7 @@ class _NewPetPageState extends State<NewPetPage> {
   TextEditingController playGroup = TextEditingController();
   TextEditingController dob = TextEditingController();
   TextEditingController weight = TextEditingController();
+  TextEditingController animalType = TextEditingController();
 
   @override
   void dispose() {
@@ -30,6 +30,7 @@ class _NewPetPageState extends State<NewPetPage> {
     playGroup.dispose();
     dob.dispose();
     weight.dispose();
+    animalType.dispose();
     super.dispose();
   }
 
@@ -51,7 +52,13 @@ class _NewPetPageState extends State<NewPetPage> {
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
-            onPressed: saveForm,
+            onPressed: () async {
+              await saveForm();
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return (const SchedulePage());
+              }));
+            },
             icon: const Icon(
               Icons.done,
               color: Colors.black,
@@ -63,8 +70,7 @@ class _NewPetPageState extends State<NewPetPage> {
           )
         ],
       ),
-      body: Container(
-          child: (_futurePet == null) ? buildForm() : buildFutureBuilder()));
+      body: Container(child: buildForm()));
 
   Form buildForm() {
     return Form(
@@ -117,9 +123,25 @@ class _NewPetPageState extends State<NewPetPage> {
                         border: OutlineInputBorder(),
                         labelText: "Color",
                         hintText: "Enter the pet's color"),
-                    validator: (email) => email != null && email.isEmpty
+                    validator: (color) => color != null && color.isEmpty
                         ? "Color cannot be empty"
                         : null),
+              )),
+              Flexible(
+                  child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: TextFormField(
+                    controller: animalType,
+                    onFieldSubmitted: (_) => saveForm(),
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Animal Type",
+                        hintText: "Enter pet type"),
+                    validator: (animalType) =>
+                        animalType != null && animalType.isEmpty
+                            ? "Pet type cannot be empty"
+                            : null),
               )),
               Flexible(
                   child: Padding(
@@ -186,23 +208,12 @@ class _NewPetPageState extends State<NewPetPage> {
 
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
-    setState(() {
-      _futurePet = createPet(petName.text, breed.text, weight.text, color.text,
-          playGroup.text, dob.text);
-    });
-  }
 
-  FutureBuilder<Pet> buildFutureBuilder() {
-    return FutureBuilder<Pet>(
-        future: _futurePet,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.petName);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-
-          return const CircularProgressIndicator();
-        });
+    if (isValid) {
+      setState(() {
+        futurePet = createPet(petName.text, animalType.text, breed.text,
+            weight.text, color.text, playGroup.text, dob.text);
+      });
+    }
   }
 }

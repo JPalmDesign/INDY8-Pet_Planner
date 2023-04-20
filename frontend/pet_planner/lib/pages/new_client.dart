@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:pet_planner/pages/client_class.dart';
 import 'package:pet_planner/pages/schedule_page.dart';
 
-import 'exist_client.dart';
-
 class NewClientPage extends StatefulWidget {
   const NewClientPage({Key? key}) : super(key: key);
 

@@ -15,10 +15,10 @@ class NewAppointmentPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NewAppointmentPageState createState() => _NewAppointmentPageState();
+  NewAppointmentPageState createState() => NewAppointmentPageState();
 }
 
-class _NewAppointmentPageState extends State<NewAppointmentPage> {
+class NewAppointmentPageState extends State<NewAppointmentPage> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   late DateTime fromDate;

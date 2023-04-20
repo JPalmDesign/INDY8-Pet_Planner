@@ -5,17 +5,6 @@ import 'package:http/http.dart' as http;
 // Tutorial (Send): https://docs.flutter.dev/cookbook/networking/send-data
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
-/* Future<Client> fetchClient() async {
-  final response =
-      await http.get(Uri.parse('https://petplanner.azurewebsites.net/client'));
-
-  if (response.statusCode == 200) {
-    return Client.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to load client.');
-  }
-} */
-
 class Client {
   final String firstName;
   final String lastName;

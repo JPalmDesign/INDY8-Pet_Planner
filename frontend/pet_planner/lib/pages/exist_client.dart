@@ -7,10 +7,10 @@ class OldClientPage extends StatefulWidget {
   const OldClientPage({Key? key}) : super(key: key);
 
   @override
-  _OldClientPageState createState() => _OldClientPageState();
+  OldClientPageState createState() => OldClientPageState();
 }
 
-class _OldClientPageState extends State<OldClientPage> {
+class OldClientPageState extends State<OldClientPage> {
   List<dynamic> data = [];
   bool _isExpanded = false;
   int? _selectedIndex = null;
@@ -26,7 +26,8 @@ class _OldClientPageState extends State<OldClientPage> {
         data = parsed;
       });
     } else {
-      throw Exception('Failed to load client.');
+      noDataMessage();
+      // throw Exception('Failed to load client.');
     }
   }
 
@@ -34,7 +35,7 @@ class _OldClientPageState extends State<OldClientPage> {
     final http.Response response = await http
         .delete(Uri.parse('https://petplanner.azurewebsites.net/client/$id'));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       setState(() {
         data.removeWhere((client) => client['id'] == id);
         fetchClient();
@@ -299,5 +300,10 @@ class _OldClientPageState extends State<OldClientPage> {
                             }
                           }))))
         ]));
+  }
+
+  Container noDataMessage() {
+    return Container(
+        color: Colors.white, child: const Text('No data available'));
   }
 }
