@@ -59,7 +59,9 @@ class _NewClientPageState extends State<NewClientPage> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: () {
+              onPressed: () async {
+                await saveForm();
+
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return (const SchedulePage());
                 }));

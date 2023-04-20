@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:pet_planner/pages/client_class.dart';
-import 'package:pet_planner/pages/client_view.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -128,12 +124,12 @@ class _OldClientPageState extends State<OldClientPage> {
                                                         10, 20, 20, 20),
                                                 child: Column(children: [
                                                   Row(children: [
-                                                    Icon(
+                                                    const Icon(
                                                       Icons.account_circle,
                                                       color: Colors.black,
                                                       size: 30,
                                                     ),
-                                                    SizedBox(width: 10),
+                                                    const SizedBox(width: 10),
                                                     Text(
                                                         data.isNotEmpty
                                                             ? data[index]
