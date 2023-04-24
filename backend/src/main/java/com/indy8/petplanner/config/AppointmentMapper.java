@@ -3,6 +3,7 @@ package com.indy8.petplanner.config;
 import com.indy8.petplanner.appointments.AppointmentByIdResponse;
 import com.indy8.petplanner.appointments.CreateNewAppointmentRequest;
 import com.indy8.petplanner.appointments.CreateNewAppointmentResponse;
+import com.indy8.petplanner.appointments.UpdateAppointmentResponse;
 import com.indy8.petplanner.domain.Appointment;
 
 public class AppointmentMapper {
@@ -34,10 +35,21 @@ public class AppointmentMapper {
         var appointment = new Appointment();
 
         appointment.setAppointmentType(request.getAppointmentType());
-        appointment.setStartDateTime(request.getStartTime());
-        appointment.setEndDateTime(request.getEndTime());
+        appointment.setStartDateTime(request.getStartDateTime());
+        appointment.setEndDateTime(request.getEndDateTime());
         appointment.setCostPerUnit(request.getCostPerUnit());
 
         return appointment;
+    }
+
+    public UpdateAppointmentResponse mapAppointmentToUpdateAppointmentResponse(Appointment appointment) {
+        var response = new UpdateAppointmentResponse();
+
+        response.setId(appointment.getId());
+        response.setAppointmentType(appointment.getAppointmentType());
+        response.setStartDateTime(appointment.getStartDateTime());
+        response.setEndDateTime(appointment.getEndDateTime());
+
+        return response;
     }
 }

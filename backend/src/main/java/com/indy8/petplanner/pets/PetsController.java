@@ -1,5 +1,6 @@
 package com.indy8.petplanner.pets;
 
+import com.indy8.petplanner.clients.ClientByIdResponse;
 import com.indy8.petplanner.config.PetMapper;
 import com.indy8.petplanner.dataaccess.ClientRepository;
 import com.indy8.petplanner.dataaccess.PetRepository;
@@ -8,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class PetsController {
@@ -62,6 +66,16 @@ public class PetsController {
         updatePet(updatePetRequest, pet);
         petRepository.save(pet);
         return this.petMapper.mapPetToUpdatePetResponse(pet);
+    }
+
+    @GetMapping("/pet")
+    public List<PetByIdResponse> getAllPets() {
+        var dbResult = petRepository.findAll();
+        var response = new ArrayList<PetByIdResponse>();
+        for(var pet : dbResult) {
+            response.add(this.petMapper.mapPetToPetByIdResponse(pet));
+        }
+        return response;
     }
 
     private static void updatePet(UpdatePetRequest updatePetRequest, Pet pet) {
