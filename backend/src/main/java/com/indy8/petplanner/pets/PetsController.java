@@ -3,7 +3,9 @@ package com.indy8.petplanner.pets;
 import com.indy8.petplanner.config.PetMapper;
 import com.indy8.petplanner.dataaccess.ClientRepository;
 import com.indy8.petplanner.dataaccess.PetRepository;
+import com.indy8.petplanner.domain.Pet;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -48,5 +50,38 @@ public class PetsController {
         return response;
     }
 
+    @PutMapping("/pet/{id}")
+    public UpdatePetResponse updatePet(@RequestBody UpdatePetRequest updatePetRequest, @PathVariable Integer id) {
+        var dbResult = petRepository.findById(id);
+        if (dbResult.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "pet not found"
+            );
+        }
+        var pet = dbResult.get();
+        updatePet(updatePetRequest, pet);
+        petRepository.save(pet);
+        return this.petMapper.mapPetToUpdatePetResponse(pet);
+    }
 
+    private static void updatePet(UpdatePetRequest updatePetRequest, Pet pet) {
+        pet.setName(updatePetRequest.getName());
+        pet.setAnimalType(updatePetRequest.getAnimalType());
+        pet.setDateOfBirth(updatePetRequest.getDateOfBirth());
+        pet.setBreed(updatePetRequest.getBreed());
+        pet.setColor(updatePetRequest.getColor());
+        pet.setWeight(updatePetRequest.getWeight());
+    }
+
+    @DeleteMapping("/pet/{id}")
+    public ResponseEntity<String> deletePet(@RequestParam(value = "id") Integer id) {
+        var dbResult = petRepository.findById(id);
+        if (dbResult.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "pet not found"
+            );
+        }
+        petRepository.delete(dbResult.get());
+        return new ResponseEntity<>("Pet deleted", HttpStatus.OK);
+    }
 }

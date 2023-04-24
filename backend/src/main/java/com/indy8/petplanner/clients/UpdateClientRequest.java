@@ -1,13 +1,28 @@
 package com.indy8.petplanner.clients;
 
-public class CreateNewClientRequest {
+public class UpdateClientRequest {
     private String firstName;
     private String lastName;
-    private long phoneNumber;
+    private String email;
+    private String phoneNumber;
     private String address;
     private String city;
     private String state;
-    private int zip;
+    private String zipCode;
+
+    public UpdateClientRequest() {
+    }
+
+    public UpdateClientRequest(String firstName, String lastName, String email, String phoneNumber, String address, String city, String state, String zipCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -25,11 +40,19 @@ public class CreateNewClientRequest {
         this.lastName = lastName;
     }
 
-    public long getPhoneNumber() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -57,11 +80,11 @@ public class CreateNewClientRequest {
         this.state = state;
     }
 
-    public int getZip() {
-        return zip;
+    public String getZip() {
+        return zipCode;
     }
 
-    public void setZip(int zip) {
-        this.zip = zip;
+    public void setZip(String zipCode) {
+        this.zipCode = zipCode;
     }
 }

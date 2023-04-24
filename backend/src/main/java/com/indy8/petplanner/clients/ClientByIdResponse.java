@@ -6,11 +6,9 @@ import java.util.List;
 public class ClientByIdResponse {
     private Integer id;                     //Auto generate unique identifier
     private String firstName;
-    private char middleInitial;
     private String lastName;
     private long phoneNumber;
-    private String addressLine1;
-    private String addressLine2;
+    private String address;
     private String city;
     private String state;               //Need UI to code the list of states as a drop down list
     private int zip;
@@ -35,14 +33,6 @@ public class ClientByIdResponse {
         this.firstName = firstName;
     }
 
-    public char getMiddleInitial() {
-        return middleInitial;
-    }
-
-    public void setMiddleInitial(char middleInitial) {
-        this.middleInitial = middleInitial;
-    }
-
     public String getLastName() {
         return lastName;
     }
@@ -59,20 +49,12 @@ public class ClientByIdResponse {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {

@@ -18,7 +18,6 @@ public class Pet {
     private String breed;
     private String color;
     private String weight;
-    private String playgroup;
     private LocalDate dateOfBirth;           // Need to convert to useable date.
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "pet")
@@ -80,14 +79,6 @@ public class Pet {
 
     public void setWeight(String weight) {
         this.weight = weight;
-    }
-
-    public String getPlaygroup() {
-        return playgroup;
-    }
-
-    public void setPlaygroup(String playgroup) {
-        this.playgroup = playgroup;
     }
 
     public LocalDate getDateOfBirth() {

@@ -1,13 +1,7 @@
 package com.indy8.petplanner.config;
 
-import com.indy8.petplanner.clients.ClientPet;
 import com.indy8.petplanner.domain.Pet;
-import com.indy8.petplanner.pets.CreateNewPetRequest;
-import com.indy8.petplanner.pets.CreateNewPetResponse;
-import com.indy8.petplanner.pets.PetAppointment;
-import com.indy8.petplanner.pets.PetDocument;
-import com.indy8.petplanner.pets.PetFeeding;
-import com.indy8.petplanner.pets.PetByIdResponse;
+import com.indy8.petplanner.pets.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +14,6 @@ public class PetMapper {
         pet.setColor(request.getColor());
         pet.setAnimalType(request.getAnimalType());
         pet.setDateOfBirth(request.getDateOfBirth());
-        pet.setPlaygroup(request.getPlaygroup());
         pet.setWeight(request.getWeight());
         return pet;
     }
@@ -34,7 +27,6 @@ public class PetMapper {
         response.setClientId(pet.getClient().getId());
         response.setAnimalType(pet.getAnimalType());
         response.setDateOfBirth(pet.getDateOfBirth());
-        response.setPlaygroup(pet.getPlaygroup());
         response.setWeight(pet.getWeight());
 
         return response;
@@ -49,7 +41,6 @@ public class PetMapper {
         response.setClientId(pet.getClient().getId());
         response.setAnimalType(pet.getAnimalType());
         response.setDateOfBirth(pet.getDateOfBirth());
-        response.setPlaygroup(pet.getPlaygroup());
         response.setWeight(pet.getWeight());
 
         List<PetAppointment> appointments = pet.getAppointments().stream().map(appointment -> {
@@ -78,6 +69,19 @@ public class PetMapper {
         }).collect(Collectors.toList());
 
         response.setPetFeedingList(feedings);
+
+        return response;
+    }
+
+    public UpdatePetResponse mapPetToUpdatePetResponse(Pet pet) {
+        var response = new UpdatePetResponse();
+        response.setId(pet.getId());
+        response.setName(pet.getName());
+        response.setBreed(pet.getBreed());
+        response.setColor(pet.getColor());
+        response.setAnimalType(pet.getAnimalType());
+        response.setDateOfBirth(pet.getDateOfBirth());
+        response.setWeight(pet.getWeight());
 
         return response;
     }
