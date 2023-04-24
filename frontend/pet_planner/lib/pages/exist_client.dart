@@ -22,12 +22,14 @@ class OldClientPageState extends State<OldClientPage> {
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
-      setState(() {
-        data = parsed;
-      });
+      if (mounted) {
+        setState(() {
+          data = parsed;
+        });
+      }
     } else {
       noDataMessage();
-      // throw Exception('Failed to load client.');
+      //throw Exception('Failed to load client.');
     }
   }
 
@@ -65,6 +67,11 @@ class OldClientPageState extends State<OldClientPage> {
   void initState() {
     super.initState();
     fetchClient();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -304,6 +311,10 @@ class OldClientPageState extends State<OldClientPage> {
 
   Container noDataMessage() {
     return Container(
-        color: Colors.white, child: const Text('No data available'));
+        color: Colors.white,
+        child: Column(children: const [
+          SizedBox(height: 100),
+          Text('No data available')
+        ]));
   }
 }
