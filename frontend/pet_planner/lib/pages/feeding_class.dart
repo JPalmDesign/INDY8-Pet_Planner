@@ -5,17 +5,6 @@ import 'package:http/http.dart' as http;
 // Tutorial (Send): https://docs.flutter.dev/cookbook/networking/send-data
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
-Future<Feeding> fetchFeeding() async {
-  final response =
-      await http.get(Uri.parse('https://petplanner.azurewebsites.net/feeding'));
-
-  if (response.statusCode == 200) {
-    return Feeding.fromJson(jsonDecode(response.body));
-  } else {
-    throw Exception('Failed to load feeding.');
-  }
-}
-
 class Feeding {
   final String foodType;
   final String foodBrand;
@@ -24,6 +13,7 @@ class Feeding {
   final String timeOfDay;
   final String medicine;
   final String dose;
+  final String name;
 
   const Feeding(
       {required this.foodType,
@@ -32,17 +22,19 @@ class Feeding {
       required this.measure,
       required this.timeOfDay,
       required this.medicine,
-      required this.dose});
+      required this.dose,
+      required this.name});
 
   factory Feeding.fromJson(Map<String, dynamic> json) {
     return Feeding(
         foodType: json['foodType'],
-        foodBrand: json['foodBrand'],
-        quantity: json['quantity'],
-        measure: json['measure'],
-        timeOfDay: json['timeOfDay'],
-        medicine: json['medicine'],
-        dose: json['dose']);
+        foodBrand: json['brand'],
+        quantity: json['quantity'].toString(),
+        measure: json['unitOfMeasure'],
+        timeOfDay: json['timeOfDay'].toString(),
+        medicine: json['medicines'],
+        dose: json['dose'].toString(),
+        name: json['name']);
   }
 }
 
@@ -53,13 +45,14 @@ Future<Feeding> createFeeding(
     String measure,
     String timeOfDay,
     String medicine,
-    String dose) async {
+    String dose,
+    String name) async {
   final response =
       await http.post(Uri.parse('https://petplanner.azurewebsites.net/feeding'),
           headers: <String, String>{
-            'Content-Type': 'test/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{
+          body: jsonEncode(<String, dynamic>{
             'foodType': foodType,
             'foodBrand': foodBrand,
             'quantity': quantity,
@@ -69,8 +62,7 @@ Future<Feeding> createFeeding(
             'dose': dose
           }));
 
-  if (response.statusCode == 201) {
-    // 201 = CREATED
+  if (response.statusCode == 200) {
     return Feeding.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create feeding.');

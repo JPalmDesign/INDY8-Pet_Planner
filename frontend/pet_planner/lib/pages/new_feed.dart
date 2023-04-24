@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/feeding_class.dart';
+import 'package:pet_planner/pages/schedule_page.dart';
 
 class NewFeedingPage extends StatefulWidget {
   const NewFeedingPage({super.key});
 
   @override
-  State<NewFeedingPage> createState() {
-    return _NewFeedingPageState();
-  }
+  State<StatefulWidget> createState() => _NewFeedingPageState();
 }
 
 class _NewFeedingPageState extends State<NewFeedingPage> {
-  Future<Feeding>? _futureFeeding;
+  Future<Feeding>? futureFeeding;
   final _formKey = GlobalKey<FormState>();
   TextEditingController foodType = TextEditingController();
   TextEditingController foodBrand = TextEditingController();
@@ -22,6 +21,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
   TextEditingController timeOfDay = TextEditingController();
   TextEditingController medicine = TextEditingController();
   TextEditingController dose = TextEditingController();
+  TextEditingController name = TextEditingController();
 
   @override
   void dispose() {
@@ -32,6 +32,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
     timeOfDay.dispose();
     medicine.dispose();
     dose.dispose();
+    name.dispose();
     super.dispose();
   }
 
@@ -53,7 +54,13 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
               ),
-              onPressed: saveForm,
+              onPressed: () async {
+                await saveForm();
+
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return (const SchedulePage());
+                }));
+              },
               icon: const Icon(
                 Icons.done,
                 color: Colors.black,
@@ -65,7 +72,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
             ),
           ]),
       body: Container(
-        child: (_futureFeeding == null ? buildForm() : buildFutureBuilder()),
+        child: (buildForm()),
       ));
 
   Form buildForm() {
@@ -74,6 +81,19 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
         child: Column(children: [
           Row(
             children: [
+              Flexible(
+                  child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                child: TextFormField(
+                    controller: name,
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    onFieldSubmitted: (_) => saveForm(),
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Name"),
+                    validator: (name) => name != null && name.isEmpty
+                        ? "Name cannot be empty"
+                        : null),
+              )),
               Flexible(
                   child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
@@ -205,29 +225,16 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
 
     if (isValid) {
       setState(() {
-        _futureFeeding = createFeeding(
+        futureFeeding = createFeeding(
             foodType.text,
             foodBrand.text,
             quantity.text,
             measure.text,
             timeOfDay.text,
             medicine.text,
-            dose.text);
+            dose.text,
+            name.text);
       });
     }
-  }
-
-  FutureBuilder<Feeding> buildFutureBuilder() {
-    return FutureBuilder<Feeding>(
-        future: _futureFeeding,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Text(snapshot.data!.foodType);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-
-          return const CircularProgressIndicator();
-        });
   }
 }
