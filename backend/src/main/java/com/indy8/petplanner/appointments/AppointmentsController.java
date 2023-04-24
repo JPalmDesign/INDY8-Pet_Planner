@@ -18,7 +18,7 @@ public class AppointmentsController {
         this.appointmentMapper = appointmentMapper;
     }
 
-    @GetMapping("/appointment")
+    @GetMapping("/appointment/{id}")
     public AppointmentByIdResponse getAppointmentById(@RequestParam(value = "id") Integer id) {
         var dbResult = appointmentRepository.findById(id);
         if (dbResult.isEmpty()) {

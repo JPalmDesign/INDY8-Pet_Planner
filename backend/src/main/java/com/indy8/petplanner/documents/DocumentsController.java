@@ -27,7 +27,7 @@ public class DocumentsController {
         this.documentMapper = documentMapper;
     }
 
-    @GetMapping("/document")
+    @GetMapping("/document/{id}")
     public DocumentByIdResponse getDocumentById(@RequestParam(value = "id") Integer id) {
         var dbResult = documentRepository.findById(id);
         if (dbResult.isEmpty()) {

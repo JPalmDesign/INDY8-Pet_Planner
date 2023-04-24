@@ -3,21 +3,12 @@ package com.indy8.petplanner.documents;
 import java.time.LocalDateTime;
 
 public class CreateNewDocumentRequest {
-    private int id;
     private Integer petId;
     private Integer clientId;
     private Integer appointmentId;
     private String recordType;
     private LocalDateTime uploadDateTime;
     private String name;  //We are not able to implement the scan feature in time
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Integer getPetId() {return petId;}
 

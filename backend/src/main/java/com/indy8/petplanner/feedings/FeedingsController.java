@@ -19,7 +19,7 @@ public class FeedingsController {
         this.feedingMapper = feedingMapper;
     }
 
-    @GetMapping("/feeding")
+    @GetMapping("/feeding/{id}")
     public FeedingByIdResponse getFeedingById(@RequestParam(value = "id") Integer id) {
         var dbResult = feedingRepository.findById(id);
         if (dbResult.isEmpty()) {

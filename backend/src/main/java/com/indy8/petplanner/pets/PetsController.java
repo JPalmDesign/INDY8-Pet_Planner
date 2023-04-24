@@ -21,7 +21,7 @@ public class PetsController {
         this.petMapper = petMapper;
     }
 
-    @GetMapping("/pet")
+    @GetMapping("/pet/{id}")
     public PetByIdResponse getPetById(@RequestParam(value = "id") Integer id) {
         var dbResult = petRepository.findById(id);
         if (dbResult.isEmpty()) {
