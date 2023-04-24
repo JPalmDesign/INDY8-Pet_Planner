@@ -48,6 +48,7 @@ Future<Pet> createPet(String petName, String animalType, String breed,
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
+            //'clientID': 0,
             'name': petName,
             'animalType': animalType,
             'breed': breed,

@@ -75,7 +75,7 @@ class _NewPetPageState extends State<NewPetPage> {
   Form buildForm() {
     return Form(
         key: _formKey,
-        child: Column(children: [
+        child: Column(children: <Widget>[
           Row(children: [
             Flexible(
                 child: Padding(
