@@ -2,13 +2,6 @@ package com.indy8.petplanner.domain;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 
 @Entity
 public class Feeding {
@@ -17,7 +10,7 @@ public class Feeding {
     private Integer id;                  //Auto generate unique identifier
     private String foodType; // Kibble, Canned
     private String brand;
-    private String quantity;
+    private Integer quantity;
     private String unitOfMeasure;   //Cups, Tablespoons, Teaspoons
     private String timeOfDay;   // AM, Noon, PM
     private String medicines;
@@ -39,9 +32,9 @@ public class Feeding {
 
     public void setBrand(String brand) {this.brand = brand;}
 
-    public String getQuantity() {return quantity;}
+    public Integer getQuantity() {return quantity;}
 
-    public void setQuantity(String quantity) {this.quantity = quantity;}
+    public void setQuantity(Integer quantity) {this.quantity = quantity;}
 
     public String getUnitOfMeasure() {return unitOfMeasure;}
 

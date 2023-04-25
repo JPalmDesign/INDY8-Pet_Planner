@@ -28,7 +28,7 @@ public class PetsController {
     }
 
     @GetMapping("/pet/{id}")
-    public PetByIdResponse getPetById(@RequestParam(value = "id") Integer id) {
+    public PetByIdResponse getPetById(@PathVariable Integer id) {
         var dbResult = petRepository.findById(id);
         if (dbResult.isEmpty()) {
             throw new ResponseStatusException(
@@ -88,7 +88,7 @@ public class PetsController {
     }
 
     @DeleteMapping("/pet/{id}")
-    public ResponseEntity<String> deletePet(@RequestParam(value = "id") Integer id) {
+    public ResponseEntity<String> deletePet(@PathVariable Integer id) {
         var dbResult = petRepository.findById(id);
         if (dbResult.isEmpty()) {
             throw new ResponseStatusException(

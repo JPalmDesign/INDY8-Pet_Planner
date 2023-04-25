@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 public class ClientsController {
-
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
@@ -34,7 +33,7 @@ public class ClientsController {
     }
 
     @GetMapping("/client/{id}")
-    public ClientByIdResponse getClientById(@PathParam(value = "id") Integer id) {
+    public ClientByIdResponse getClientById(@PathVariable Integer id) {
         var dbResult = clientRepository.findById(id);
         if(dbResult.isEmpty()) {
             throw new ResponseStatusException(

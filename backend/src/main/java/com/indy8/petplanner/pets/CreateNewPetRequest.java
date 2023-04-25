@@ -14,7 +14,6 @@ public final class CreateNewPetRequest {
     private String breed;
     private String color;
     private String weight;
-    private String playgroup;
     private LocalDate dateOfBirth;
 
     public int getClientId() {
@@ -63,14 +62,6 @@ public final class CreateNewPetRequest {
 
     public void setWeight(String weight) {
         this.weight = weight;
-    }
-
-    public String getPlaygroup() {
-        return playgroup;
-    }
-
-    public void setPlaygroup(String playgroup) {
-        this.playgroup = playgroup;
     }
 
     public LocalDate getDateOfBirth() {

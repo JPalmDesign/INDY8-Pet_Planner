@@ -4,6 +4,7 @@ import com.indy8.petplanner.config.AppointmentMapper;
 import com.indy8.petplanner.dataaccess.AppointmentRepository;
 import com.indy8.petplanner.domain.Appointment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,7 +21,7 @@ public class AppointmentsController {
     }
 
     @GetMapping("/appointment/{id}")
-    public AppointmentByIdResponse getAppointmentById(@RequestParam(value = "id") Integer id) {
+    public AppointmentByIdResponse getAppointmentById(@PathVariable(value = "id") Integer id) {
         var dbResult = appointmentRepository.findById(id);
         if (dbResult.isEmpty()) {
             throw new ResponseStatusException(
@@ -53,10 +54,21 @@ public class AppointmentsController {
     }
 
     private static void updateAppointment(UpdateAppointmentRequest updateAppointmentRequest, Appointment appointment) {
-        //appointment.setPetId(updateAppointmentRequest.getPetId());
         appointment.setStartDateTime(updateAppointmentRequest.getStartDateTime());
         appointment.setEndDateTime(updateAppointmentRequest.getEndDateTime());
         appointment.setAppointmentType(updateAppointmentRequest.getAppointmentType());
         appointment.setCostPerUnit(updateAppointmentRequest.getCostPerUnit());
+    }
+
+    @DeleteMapping("/appointment/{id}")
+    public ResponseEntity<String> deleteAppointment(@PathVariable Integer id){
+        var dbResult = appointmentRepository.findById(id);
+        if (dbResult.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        appointmentRepository.deleteById(id);
+        return new ResponseEntity<>("Appointment deleted", HttpStatus.OK);
     }
 }

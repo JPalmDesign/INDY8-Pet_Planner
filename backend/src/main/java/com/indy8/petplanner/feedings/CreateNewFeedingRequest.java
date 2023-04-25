@@ -1,13 +1,11 @@
 package com.indy8.petplanner.feedings;
 
-import java.time.LocalDate;
-
 public final class CreateNewFeedingRequest {
 
     private int petId;
     private String foodType; // Kibble, Canned
     private String brand;
-    private String quantity;
+    private Integer quantity;
     private String unitOfMeasure;   //Cups, Tablespoons, Teaspoons
     private String timeOfDay;   // AM, Noon, PM
     private String medicines;
@@ -30,9 +28,9 @@ public final class CreateNewFeedingRequest {
 
     public void setBrand(String brand) {this.brand = brand;}
 
-    public String getQuantity() {return quantity;}
+    public Integer getQuantity() {return quantity;}
 
-    public void setQuantity(String quantity) {this.quantity = quantity;}
+    public void setQuantity(Integer quantity) {this.quantity = quantity;}
 
     public String getUnitOfMeasure() {return unitOfMeasure;}
 
