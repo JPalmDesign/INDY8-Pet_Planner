@@ -33,6 +33,41 @@ class OldClientPageState extends State<OldClientPage> {
     }
   }
 
+  // maybe needs an editClient page?
+  // once this is done, I think others will follow a similar format.
+  Future<void> editClient(
+      int id,
+      String firstName,
+      String lastName,
+      String phoneNumber,
+      String email,
+      String address,
+      String city,
+      String state,
+      String postalCode) async {
+    final http.Response response = await http.put(
+        Uri.parse('https://petplanner.azurewebsites.net/client/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': phoneNumber,
+          'email': email,
+          'address': address,
+          'city': city,
+          'state': state,
+          'zip': postalCode
+        }));
+
+    if (response.statusCode == 200) {
+      // The pet was updated successfully, do something if needed
+    } else {
+      throw Exception('Failed to edit pet.');
+    }
+  }
+
   Future<void> deleteClient(int id) async {
     final http.Response response = await http
         .delete(Uri.parse('https://petplanner.azurewebsites.net/client/$id'));
@@ -306,6 +341,8 @@ class OldClientPageState extends State<OldClientPage> {
                                   ));
                             }
                           })))),
+
+          // we might want this on each client box instead of just the one time (so we can keep trank of index(id))
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             PopupMenuButton(
               shape: const RoundedRectangleBorder(
