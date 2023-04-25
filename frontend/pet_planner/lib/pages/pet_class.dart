@@ -51,7 +51,6 @@ Future<Pet> createPet(String petName, String animalType, String breed,
             'breed': breed,
             'color': color,
             'weight': weight,
-            'playgroup': "group 1",
             'dateOfBirth': dob
           }));
   if (response.statusCode == 200) {
