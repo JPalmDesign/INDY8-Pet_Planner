@@ -53,13 +53,15 @@ Future<Feeding> createFeeding(
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
+            'petId': 0,
             'foodType': foodType,
-            'foodBrand': foodBrand,
+            'brand': foodBrand,
             'quantity': quantity,
-            'measure': measure,
+            'unitOfMeasure': measure,
             'timeOfDay': timeOfDay,
-            'medicine': medicine,
-            'dose': dose
+            'medicines': medicine,
+            'dose': dose,
+            'name': name
           }));
 
   if (response.statusCode == 200) {

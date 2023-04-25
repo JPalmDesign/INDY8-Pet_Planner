@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pet_planner/pages/new_feed.dart';
+
+import 'new_app.dart';
 
 class OldPetPage extends StatefulWidget {
   const OldPetPage({Key? key}) : super(key: key);
@@ -13,7 +16,7 @@ class OldPetPage extends StatefulWidget {
 class OldPetPageState extends State<OldPetPage> {
   List<dynamic> data = [];
   bool _isExpanded = false;
-  int? _selectedIndex;
+  int? _selectedIndex = null;
   double height = 105;
 
   Future<void> fetchPet() async {
@@ -22,12 +25,13 @@ class OldPetPageState extends State<OldPetPage> {
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
-      setState(() {
-        data = parsed;
-      });
+      if (mounted) {
+        setState(() {
+          data = parsed;
+        });
+      }
     } else {
-      //throw Exception('Failed to load pet.');
-      noDataMessage(); // allows you to keep using app, no exception
+      throw Exception('Failed to load pet.');
     }
   }
 
@@ -37,7 +41,7 @@ class OldPetPageState extends State<OldPetPage> {
 
     if (response.statusCode == 200) {
       setState(() {
-        data.removeWhere((client) => client['id'] == id);
+        data.removeWhere((pet) => pet['id'] == id);
         fetchPet();
       });
     } else {
@@ -91,11 +95,11 @@ class OldPetPageState extends State<OldPetPage> {
                 "Existing Pets",
                 style: TextStyle(fontFamily: 'robotoMedium', fontSize: 36),
               )),
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
           SingleChildScrollView(
               child: Container(
                   child: SizedBox(
-                      height: 600,
+                      height: 500,
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
@@ -127,7 +131,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                 child: Column(children: [
                                                   Row(children: [
                                                     const Icon(
-                                                      Icons.account_circle,
+                                                      Icons.pets,
                                                       color: Colors.black,
                                                       size: 30,
                                                     ),
@@ -226,12 +230,45 @@ class OldPetPageState extends State<OldPetPage> {
                                     ),
                                   ),
                                 ));
-                          }))))
+                          })))),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            PopupMenuButton(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              color: Color(0xFFAEB2C5),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 0,
+                  child: const Text("New Feeding"),
+                  onTap: () => Future(
+                    () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => NewFeedingPage()),
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 1,
+                  child: Text("New Appointment"),
+                  onTap: () => Future(
+                    () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => NewAppointmentPage())),
+                  ),
+                ),
+              ],
+              icon: const Icon(Icons.add_circle_outline, color: Colors.black),
+              iconSize: 50,
+              offset: const Offset(170, 50),
+            )
+          ])
         ]));
   }
 
   Container noDataMessage() {
     return Container(
-        color: Colors.white, child: const Text('No data available'));
+        color: Colors.white,
+        child: Column(children: const [
+          SizedBox(height: 100),
+          Text('No data available')
+        ]));
   }
 }

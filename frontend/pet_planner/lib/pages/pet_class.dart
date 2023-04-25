@@ -12,7 +12,6 @@ class Pet {
   final String breed;
   final String color;
   final String weight;
-  final String playGroup;
   final String dob;
 
   const Pet({
@@ -22,7 +21,6 @@ class Pet {
     required this.breed,
     required this.color,
     required this.weight,
-    required this.playGroup,
     required this.dob,
   });
 
@@ -34,31 +32,29 @@ class Pet {
       breed: json['breed'],
       color: json['color'],
       weight: json['weight'].toString(),
-      playGroup: json['playGroup'],
       dob: json['dateOfBirth'].toString(),
     );
   }
 }
 
 Future<Pet> createPet(String petName, String animalType, String breed,
-    String weight, String color, String playGroup, String dob) async {
+    String weight, String color, String dob) async {
   final response =
       await http.post(Uri.parse('https://petplanner.azurewebsites.net/pet'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
-            //'clientID': 0,
+            'clientId': 1,
             'name': petName,
             'animalType': animalType,
             'breed': breed,
             'color': color,
             'weight': weight,
-            'playgroup': playGroup,
+            'playgroup': "group 1",
             'dateOfBirth': dob
           }));
   if (response.statusCode == 200) {
-    // 201 = CREATED
     return Pet.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create pet.');

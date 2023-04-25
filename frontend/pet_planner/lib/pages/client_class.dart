@@ -9,7 +9,7 @@ class Client {
   final String firstName;
   final String lastName;
   final String phoneNumber;
-  //final String email;
+  final String email;
   final String address;
   final String city;
   final String state;
@@ -21,7 +21,7 @@ class Client {
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
-    //required this.email,
+    required this.email,
     required this.address,
     required this.city,
     required this.state,
@@ -35,8 +35,8 @@ class Client {
         firstName: json['firstName'],
         lastName: json['lastName'],
         phoneNumber: json['phoneNumber'].toString(),
-        //email: json['email'],
-        address: json['addressLine1'],
+        email: json['email'].toString(),
+        address: json['address'].toString(),
         city: json['city'],
         state: json['state'],
         postalCode: json['postalCode'].toString());
@@ -59,19 +59,16 @@ Future<Client> createClient(
           },
           body: jsonEncode(<String, dynamic>{
             'firstName': firstName,
-            'middleInitial': "",
             'lastName': lastName,
             'phoneNumber': phoneNumber,
             'email': email,
-            'addressLine1': address,
-            'addressLine2': "",
+            'address': address,
             'city': city,
             'state': state,
             'zip': postalCode
           }));
 
   if (response.statusCode == 200) {
-    // 201 = CREATED
     return Client.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create client.');

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/pet_class.dart';
-import 'package:pet_planner/pages/schedule_page.dart';
+
+import 'exist_client.dart';
 
 class NewPetPage extends StatefulWidget {
   const NewPetPage({Key? key}) : super(key: key);
@@ -17,7 +18,6 @@ class _NewPetPageState extends State<NewPetPage> {
   TextEditingController petName = TextEditingController();
   TextEditingController breed = TextEditingController();
   TextEditingController color = TextEditingController();
-  TextEditingController playGroup = TextEditingController();
   TextEditingController dob = TextEditingController();
   TextEditingController weight = TextEditingController();
   TextEditingController animalType = TextEditingController();
@@ -27,7 +27,6 @@ class _NewPetPageState extends State<NewPetPage> {
     petName.dispose();
     breed.dispose();
     color.dispose();
-    playGroup.dispose();
     dob.dispose();
     weight.dispose();
     animalType.dispose();
@@ -56,7 +55,7 @@ class _NewPetPageState extends State<NewPetPage> {
               await saveForm();
 
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return (const SchedulePage());
+                return (const OldClientPage());
               }));
             },
             icon: const Icon(
@@ -160,28 +159,6 @@ class _NewPetPageState extends State<NewPetPage> {
               )),
             ],
           ),
-          Row(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-                  child: SizedBox(
-                    width: 1135,
-                    child: TextFormField(
-                        controller: playGroup,
-                        onFieldSubmitted: (_) => saveForm(),
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.black),
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Play Group",
-                            hintText: "Enter the pet's play group"),
-                        validator: (playGroup) =>
-                            playGroup != null && playGroup.isEmpty
-                                ? "Play group cannot be empty"
-                                : null),
-                  )),
-            ],
-          ),
           Row(children: [
             Flexible(
                 child: Padding(
@@ -212,7 +189,7 @@ class _NewPetPageState extends State<NewPetPage> {
     if (isValid) {
       setState(() {
         futurePet = createPet(petName.text, animalType.text, breed.text,
-            weight.text, color.text, playGroup.text, dob.text);
+            weight.text, color.text, dob.text);
       });
     }
   }

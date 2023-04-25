@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:pet_planner/pages/new_pet.dart';
 
 class OldClientPage extends StatefulWidget {
   const OldClientPage({Key? key}) : super(key: key);
@@ -28,8 +29,7 @@ class OldClientPageState extends State<OldClientPage> {
         });
       }
     } else {
-      noDataMessage();
-      //throw Exception('Failed to load client.');
+      throw Exception('Failed to load client.');
     }
   }
 
@@ -37,7 +37,7 @@ class OldClientPageState extends State<OldClientPage> {
     final http.Response response = await http
         .delete(Uri.parse('https://petplanner.azurewebsites.net/client/$id'));
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       setState(() {
         data.removeWhere((client) => client['id'] == id);
         fetchClient();
@@ -101,7 +101,7 @@ class OldClientPageState extends State<OldClientPage> {
           SingleChildScrollView(
               child: Container(
                   child: SizedBox(
-                      height: 600,
+                      height: 500,
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
@@ -229,7 +229,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                                               'robotoMedium')),
                                                                   Text(
                                                                       data.isNotEmpty
-                                                                          ? data[index]['addressLine1']
+                                                                          ? data[index]['address']
                                                                               .toString()
                                                                           : '',
                                                                       style: const TextStyle(
@@ -305,7 +305,28 @@ class OldClientPageState extends State<OldClientPage> {
                                     ),
                                   ));
                             }
-                          }))))
+                          })))),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            PopupMenuButton(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              color: Color(0xFFAEB2C5),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 0,
+                  child: const Text("New Pet"),
+                  onTap: () => Future(
+                    () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => NewPetPage()),
+                    ),
+                  ),
+                ),
+              ],
+              icon: const Icon(Icons.add_circle_outline, color: Colors.black),
+              iconSize: 50,
+              offset: const Offset(170, 50),
+            )
+          ])
         ]));
   }
 

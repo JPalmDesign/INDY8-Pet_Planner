@@ -65,7 +65,7 @@ class SchedulePage extends StatelessWidget {
                   ))),
           Row(children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(40, 20, 0, 0),
+                padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFAEB2C5),
@@ -83,7 +83,7 @@ class SchedulePage extends StatelessWidget {
             Container(
                 width: 800,
                 child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
@@ -94,7 +94,7 @@ class SchedulePage extends StatelessWidget {
                           )
                         ]))),
             Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFAEB2C5),
@@ -155,52 +155,17 @@ class SchedulePage extends StatelessWidget {
             PopupMenuButton(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              color: const Color(0xFFAEB2C5),
+              color: Color(0xFFAEB2C5),
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: 0,
-                  child: const Text("Home"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const SchedulePage()),
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 1,
                   child: const Text("New Client"),
                   onTap: () => Future(
                     () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const NewClientPage()),
+                      MaterialPageRoute(builder: (_) => NewClientPage()),
                     ),
                   ),
                 ),
-                PopupMenuItem(
-                  value: 2,
-                  child: const Text("New Appointment"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const NewAppointmentPage())),
-                  ),
-                ),
-                PopupMenuItem(
-                    value: 3,
-                    child: const Text("New Pet"),
-                    onTap: () => Future(
-                          () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (_) => const NewPetPage()),
-                          ),
-                        )),
-                PopupMenuItem(
-                    value: 4,
-                    child: const Text("New Feeding"),
-                    onTap: () => Future(
-                          () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (_) => const NewFeedingPage()),
-                          ),
-                        ))
               ],
               icon: const Icon(Icons.add_circle_outline, color: Colors.black),
               iconSize: 50,
