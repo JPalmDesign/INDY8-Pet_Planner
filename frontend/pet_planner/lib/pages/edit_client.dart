@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart';
 import 'package:pet_planner/pages/client_class.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -58,7 +57,7 @@ class _EditClientPageState extends State<EditClientPage> {
   }
 
   Future<void> editClient(
-      //int id,
+      int id,
       String firstName,
       String lastName,
       String phoneNumber,
@@ -93,6 +92,7 @@ class _EditClientPageState extends State<EditClientPage> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       final updatedClient = Client(
+        id: widget.client.id,
         firstName: firstNameContr.text,
         lastName: lastNameContr.text,
         phoneNumber: phoneNumContr.text,
@@ -104,6 +104,7 @@ class _EditClientPageState extends State<EditClientPage> {
       );
       // Call the API to update the client
       await editClient(
+        updatedClient.id,
         updatedClient.firstName,
         updatedClient.lastName,
         updatedClient.phoneNumber,

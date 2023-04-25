@@ -215,7 +215,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                                 builder: (context) =>
                                                                     EditClientPage(
                                                                         client:
-                                                                            index)),
+                                                                            data[index])),
                                                           );
                                                         },
                                                         color: Colors.black,

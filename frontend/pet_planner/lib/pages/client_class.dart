@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
 class Client {
+  final int id;
   final String firstName;
   final String lastName;
   final String phoneNumber;
@@ -14,10 +15,9 @@ class Client {
   final String city;
   final String state;
   final String postalCode;
-  // final bool isPhone;
-  //final bool isEmail
 
   const Client({
+    required this.id,
     required this.firstName,
     required this.lastName,
     required this.phoneNumber,
@@ -32,6 +32,7 @@ class Client {
 
   factory Client.fromJson(Map<String, dynamic> json) {
     return Client(
+        id: json['id'],
         firstName: json['firstName'],
         lastName: json['lastName'],
         phoneNumber: json['phoneNumber'].toString(),
