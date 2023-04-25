@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pet_planner/pages/new_pet.dart';
 
+import 'edit_client.dart';
+
 class OldClientPage extends StatefulWidget {
   const OldClientPage({Key? key}) : super(key: key);
 
@@ -35,7 +37,7 @@ class OldClientPageState extends State<OldClientPage> {
 
   // maybe needs an editClient page?
   // once this is done, I think others will follow a similar format.
-  Future<void> editClient(
+  /*  Future<void> editClient(
       int id,
       String firstName,
       String lastName,
@@ -66,7 +68,7 @@ class OldClientPageState extends State<OldClientPage> {
     } else {
       throw Exception('Failed to edit pet.');
     }
-  }
+  } */
 
   Future<void> deleteClient(int id) async {
     final http.Response response = await http
@@ -206,7 +208,16 @@ class OldClientPageState extends State<OldClientPage> {
                                                       const SizedBox(width: 20),
                                                       IconButton(
                                                         icon: Icon(Icons.edit),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    EditClientPage(
+                                                                        client:
+                                                                            index)),
+                                                          );
+                                                        },
                                                         color: Colors.black,
                                                       ),
                                                       const SizedBox(width: 5),

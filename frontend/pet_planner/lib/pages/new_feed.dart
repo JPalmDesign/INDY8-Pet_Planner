@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/feeding_class.dart';
 
-import 'exist_pet.dart';
-
 class NewFeedingPage extends StatefulWidget {
   const NewFeedingPage({super.key});
 
@@ -58,9 +56,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
               onPressed: () async {
                 await saveForm();
 
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return (const OldPetPage());
-                }));
+                Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.done,

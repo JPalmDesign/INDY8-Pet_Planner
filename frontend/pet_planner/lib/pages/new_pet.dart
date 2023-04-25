@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/pet_class.dart';
 
-import 'exist_client.dart';
-
 class NewPetPage extends StatefulWidget {
   const NewPetPage({Key? key}) : super(key: key);
 
@@ -54,9 +52,7 @@ class _NewPetPageState extends State<NewPetPage> {
             onPressed: () async {
               await saveForm();
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return (const OldClientPage());
-              }));
+              Navigator.pop(context);
             },
             icon: const Icon(
               Icons.done,

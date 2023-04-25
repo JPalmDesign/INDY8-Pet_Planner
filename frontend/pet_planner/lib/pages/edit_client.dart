@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:async';
+import 'package:http/http.dart';
 import 'package:pet_planner/pages/client_class.dart';
-import 'package:pet_planner/pages/schedule_page.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class NewClientPage extends StatefulWidget {
-  const NewClientPage({Key? key}) : super(key: key);
+// NOTE: Client is having issues. Removing the client_class import solves
+//       the Client problem, but creates more issues elsewhere.
+
+class EditClientPage extends StatefulWidget {
+  final Client client;
+
+  const EditClientPage({Key? key, required this.client}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _NewClientPageState();
+  _EditClientPageState createState() => _EditClientPageState();
 }
 
-class _NewClientPageState extends State<NewClientPage> {
-  Future<Client>? futureClient;
+class _EditClientPageState extends State<EditClientPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController firstNameContr = TextEditingController();
   TextEditingController lastNameContr = TextEditingController();
@@ -22,9 +28,21 @@ class _NewClientPageState extends State<NewClientPage> {
   TextEditingController cityContr = TextEditingController();
   TextEditingController stateContr = TextEditingController();
   TextEditingController postalCodeContr = TextEditingController();
-  String selectedValue = "United States";
-  bool? isPhone = false;
-  bool? isEmail = false;
+
+  @override
+  void initState() {
+    super.initState();
+    firstNameContr = TextEditingController(text: widget.client.firstName);
+    lastNameContr = TextEditingController(text: widget.client.lastName);
+    phoneNumContr =
+        TextEditingController(text: widget.client.phoneNumber.toString());
+    emailContr = TextEditingController(text: widget.client.email);
+    streetAddressContr = TextEditingController(text: widget.client.address);
+    cityContr = TextEditingController(text: widget.client.city);
+    stateContr = TextEditingController(text: widget.client.state);
+    postalCodeContr =
+        TextEditingController(text: widget.client.postalCode.toString());
+  }
 
   @override
   void dispose() {
@@ -37,6 +55,67 @@ class _NewClientPageState extends State<NewClientPage> {
     stateContr.dispose();
     postalCodeContr.dispose();
     super.dispose();
+  }
+
+  Future<void> editClient(
+      //int id,
+      String firstName,
+      String lastName,
+      String phoneNumber,
+      String email,
+      String address,
+      String city,
+      String state,
+      String postalCode) async {
+    final http.Response response = await http.put(
+        Uri.parse('https://petplanner.azurewebsites.net/client/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': phoneNumber,
+          'email': email,
+          'address': address,
+          'city': city,
+          'state': state,
+          'zip': postalCode
+        }));
+
+    if (response.statusCode == 200) {
+      // The pet was updated successfully, do something if needed
+    } else {
+      throw Exception('Failed to edit pet.');
+    }
+  }
+
+  Future<void> _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      final updatedClient = Client(
+        firstName: firstNameContr.text,
+        lastName: lastNameContr.text,
+        phoneNumber: phoneNumContr.text,
+        email: emailContr.text,
+        address: streetAddressContr.text,
+        city: cityContr.text,
+        state: stateContr.text,
+        postalCode: postalCodeContr.text,
+      );
+      // Call the API to update the client
+      await editClient(
+        updatedClient.firstName,
+        updatedClient.lastName,
+        updatedClient.phoneNumber,
+        updatedClient.email,
+        updatedClient.address,
+        updatedClient.city,
+        updatedClient.state,
+        updatedClient.postalCode,
+      );
+      // Navigate back to the client details page
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -58,7 +137,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 shadowColor: Colors.transparent,
               ),
               onPressed: () async {
-                await saveForm();
+                await _submitForm();
 
                 Navigator.pop(context);
               },
@@ -87,7 +166,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: firstNameContr,
-                    onSaved: (_) => saveForm(),
+                    onSaved: (_) => _submitForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -103,7 +182,7 @@ class _NewClientPageState extends State<NewClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: lastNameContr,
-                    onSaved: (_) => saveForm(),
+                    onSaved: (_) => _submitForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -122,7 +201,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: emailContr,
-                  onSaved: (_) => saveForm(),
+                  onSaved: (_) => _submitForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
@@ -139,7 +218,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: phoneNumContr,
-                  onSaved: (_) => saveForm(),
+                  onSaved: (_) => _submitForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -154,35 +233,6 @@ class _NewClientPageState extends State<NewClientPage> {
                       ? "Phone number cannot be empty"
                       : null),
             )),
-            Flexible(
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                    child: Column(children: [
-                      const Text("Preferred Contact Type",
-                          style: TextStyle(fontSize: 20, color: Colors.black)),
-                      CheckboxListTile(
-                          value: isPhone,
-                          title: const Text("Phone",
-                              style: TextStyle(fontSize: 22)),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          activeColor: const Color(0xFFAEB2C5),
-                          onChanged: (phoneContact) {
-                            setState(() {
-                              isPhone = phoneContact;
-                            });
-                          }),
-                      CheckboxListTile(
-                          value: isEmail,
-                          title: const Text("Email",
-                              style: TextStyle(fontSize: 22)),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          activeColor: const Color(0xFFAEB2C5),
-                          onChanged: (emailContact) {
-                            setState(() {
-                              isEmail = emailContact;
-                            });
-                          })
-                    ])))
           ]),
           Row(
             children: [
@@ -192,7 +242,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 1135,
                     child: TextFormField(
                         controller: streetAddressContr,
-                        onSaved: (_) => saveForm(),
+                        onSaved: (_) => _submitForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -211,34 +261,11 @@ class _NewClientPageState extends State<NewClientPage> {
             Flexible(
               child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                        labelText: "Select your country",
-                        labelStyle: TextStyle(fontSize: 20),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey)),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFAEB2C5)))),
-                    validator: (country) =>
-                        country == null ? "Select a country" : null,
-                    value: selectedValue,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
-                    items: dropdownItems,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedValue = newValue!;
-                      });
-                    },
-                  )),
-            ),
-            Flexible(
-              child: Padding(
-                  padding: const EdgeInsets.all(20),
                   child: SizedBox(
                     width: 400,
                     child: TextFormField(
                         controller: cityContr,
-                        onSaved: (_) => saveForm(),
+                        onSaved: (_) => _submitForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -257,7 +284,7 @@ class _NewClientPageState extends State<NewClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: stateContr,
-                        onSaved: (_) => saveForm(),
+                        onSaved: (_) => _submitForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -274,7 +301,7 @@ class _NewClientPageState extends State<NewClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: postalCodeContr,
-                  onSaved: (_) => saveForm(),
+                  onSaved: (_) => _submitForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -290,34 +317,5 @@ class _NewClientPageState extends State<NewClientPage> {
             )),
           ]),
         ]));
-  }
-
-  List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(
-          value: "United States", child: Text("United States")),
-      const DropdownMenuItem(value: "Canada", child: Text("Canada")),
-      const DropdownMenuItem(value: "Brazil", child: Text("Brazil")),
-      const DropdownMenuItem(value: "England", child: Text("England")),
-    ];
-    return menuItems;
-  }
-
-  Future saveForm() async {
-    final isValid = _formKey.currentState!.validate();
-
-    if (isValid) {
-      setState(() {
-        futureClient = createClient(
-            firstNameContr.text,
-            lastNameContr.text,
-            phoneNumContr.text,
-            emailContr.text,
-            streetAddressContr.text,
-            cityContr.text,
-            stateContr.text,
-            postalCodeContr.text);
-      });
-    }
   }
 }
