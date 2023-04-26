@@ -6,8 +6,6 @@ import 'package:pet_planner/pages/forgot_password.dart';
 import 'package:pet_planner/pages/login_page.dart';
 import 'package:pet_planner/pages/new_app.dart';
 import 'package:pet_planner/pages/new_client.dart';
-import 'package:pet_planner/pages/new_feed.dart';
-import 'package:pet_planner/pages/new_pet.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:pet_planner/pages/event_provider.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +72,7 @@ class SchedulePage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return (const OldClientPage());
+                      return (OldClientPage());
                     }));
                   },
                   child: const Text("Existing Clients",

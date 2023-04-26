@@ -7,7 +7,9 @@ import 'package:pet_planner/pages/new_pet.dart';
 import 'edit_client.dart';
 
 class OldClientPage extends StatefulWidget {
-  const OldClientPage({Key? key}) : super(key: key);
+  const OldClientPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   OldClientPageState createState() => OldClientPageState();
@@ -34,41 +36,6 @@ class OldClientPageState extends State<OldClientPage> {
       throw Exception('Failed to load client.');
     }
   }
-
-  // maybe needs an editClient page?
-  // once this is done, I think others will follow a similar format.
-  /*  Future<void> editClient(
-      int id,
-      String firstName,
-      String lastName,
-      String phoneNumber,
-      String email,
-      String address,
-      String city,
-      String state,
-      String postalCode) async {
-    final http.Response response = await http.put(
-        Uri.parse('https://petplanner.azurewebsites.net/client/$id'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'firstName': firstName,
-          'lastName': lastName,
-          'phoneNumber': phoneNumber,
-          'email': email,
-          'address': address,
-          'city': city,
-          'state': state,
-          'zip': postalCode
-        }));
-
-    if (response.statusCode == 200) {
-      // The pet was updated successfully, do something if needed
-    } else {
-      throw Exception('Failed to edit pet.');
-    }
-  } */
 
   Future<void> deleteClient(int id) async {
     final http.Response response = await http
@@ -215,7 +182,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                                 builder: (context) =>
                                                                     EditClientPage(
                                                                         client:
-                                                                            index)),
+                                                                            data[index])),
                                                           );
                                                         },
                                                         color: Colors.black,
@@ -285,7 +252,15 @@ class OldClientPageState extends State<OldClientPage> {
                                                                               18,
                                                                           fontFamily:
                                                                               'robotoMedium')),
-                                                                  Text(", "),
+                                                                  const Text(
+                                                                      ", ",
+                                                                      style: TextStyle(
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              18,
+                                                                          fontFamily:
+                                                                              'robotoMedium')),
                                                                   Text(
                                                                       data.isNotEmpty
                                                                           ? data[index]['city']
@@ -341,7 +316,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                                           fontFamily:
                                                                               'robotoMedium'))
                                                                 ],
-                                                              )
+                                                              ),
                                                             ]))
                                                   ]))
                                             ],
@@ -353,7 +328,7 @@ class OldClientPageState extends State<OldClientPage> {
                             }
                           })))),
 
-          // we might want this on each client box instead of just the one time (so we can keep trank of index(id))
+          // we might want this on each client box instead of just the one time (so we can keep track of index(id))
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             PopupMenuButton(
               shape: const RoundedRectangleBorder(
@@ -375,15 +350,6 @@ class OldClientPageState extends State<OldClientPage> {
               offset: const Offset(170, 50),
             )
           ])
-        ]));
-  }
-
-  Container noDataMessage() {
-    return Container(
-        color: Colors.white,
-        child: Column(children: const [
-          SizedBox(height: 100),
-          Text('No data available')
         ]));
   }
 }

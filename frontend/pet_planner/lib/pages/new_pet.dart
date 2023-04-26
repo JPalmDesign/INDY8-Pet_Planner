@@ -65,7 +65,7 @@ class _NewPetPageState extends State<NewPetPage> {
           )
         ],
       ),
-      body: Container(child: buildForm()));
+      body: SingleChildScrollView(child: Container(child: buildForm())));
 
   Form buildForm() {
     return Form(

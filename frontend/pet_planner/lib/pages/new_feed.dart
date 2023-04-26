@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/feeding_class.dart';
 
+import 'exist_pet.dart';
+
 class NewFeedingPage extends StatefulWidget {
   const NewFeedingPage({super.key});
 
@@ -68,9 +70,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
               ),
             ),
           ]),
-      body: Container(
-        child: (buildForm()),
-      ));
+      body: SingleChildScrollView(child: Container(child: (buildForm()))));
 
   Form buildForm() {
     return Form(

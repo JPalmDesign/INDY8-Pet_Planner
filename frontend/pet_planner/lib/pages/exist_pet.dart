@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pet_planner/pages/new_feed.dart';
 
 import 'new_app.dart';
+import 'new_pet.dart';
 
 class OldPetPage extends StatefulWidget {
   const OldPetPage({Key? key}) : super(key: key);
@@ -15,8 +16,9 @@ class OldPetPage extends StatefulWidget {
 
 class OldPetPageState extends State<OldPetPage> {
   List<dynamic> data = [];
+  List<dynamic> feedData = [];
   bool _isExpanded = false;
-  int? _selectedIndex = null;
+  int? _selectedIndex;
   double height = 105;
 
   Future<void> fetchPet() async {
@@ -28,6 +30,22 @@ class OldPetPageState extends State<OldPetPage> {
       if (mounted) {
         setState(() {
           data = parsed;
+        });
+      }
+    } else {
+      throw Exception('Failed to load pet.');
+    }
+  }
+
+  Future<void> fetchFeeding() async {
+    final response = await http
+        .get(Uri.parse('https://petplanner.azurewebsites.net/feeding'));
+
+    if (response.statusCode == 200) {
+      final parsed = jsonDecode(response.body);
+      if (mounted) {
+        setState(() {
+          feedData = parsed;
         });
       }
     } else {
@@ -47,22 +65,6 @@ class OldPetPageState extends State<OldPetPage> {
     } else {
       throw Exception('Failed to delete pet.');
     }
-  }
-
-  void expandButton(int index) {
-    setState(() {
-      if (_selectedIndex == index) {
-        // If the currently selected item is tapped again, collapse it
-        _isExpanded = false;
-        _selectedIndex = null;
-        height = 105.0;
-      } else {
-        // Otherwise, expand the selected item and collapse any previously selected item
-        _isExpanded = true;
-        _selectedIndex = index;
-        height = 200.0;
-      }
-    });
   }
 
   @override
@@ -104,13 +106,29 @@ class OldPetPageState extends State<OldPetPage> {
                           shrinkWrap: true,
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
+                            void expandButton() {
+                              setState(() {
+                                if (_selectedIndex == index) {
+                                  // If the currently selected item is tapped again, collapse it
+                                  _isExpanded = false;
+                                  _selectedIndex = null;
+                                  height = 105.0;
+                                } else {
+                                  // Otherwise, expand the selected item and collapse any previously selected item
+                                  _isExpanded = true;
+                                  _selectedIndex = index;
+                                  height = 250.0;
+                                }
+                              });
+                            }
+
                             return Padding(
                                 padding: const EdgeInsets.all(20),
                                 child: SizedBox(
                                   width: 1035,
                                   height: height,
                                   child: TextButton(
-                                    onPressed: () => expandButton(index),
+                                    onPressed: () => expandButton(),
                                     style: TextButton.styleFrom(
                                       backgroundColor: const Color(0xFFAEB2C5),
                                       shadowColor: Colors.black,
@@ -221,6 +239,108 @@ class OldPetPageState extends State<OldPetPage> {
                                                                           18,
                                                                       fontFamily:
                                                                           'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Color: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty
+                                                                      ? data[index]
+                                                                              [
+                                                                              'color']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Weight: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty
+                                                                      ? data[index]
+                                                                              [
+                                                                              'weight']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Birthday: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty
+                                                                      ? data[index]
+                                                                              [
+                                                                              'dateOfBirth']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Food Type and Brand: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty &&
+                                                                          data[index]['email'] !=
+                                                                              null
+                                                                      ? data[index]
+                                                                              [
+                                                                              'foodType']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
                                                             ])
                                                           ]))
                                                 ]))
@@ -260,15 +380,6 @@ class OldPetPageState extends State<OldPetPage> {
               offset: const Offset(170, 50),
             )
           ])
-        ]));
-  }
-
-  Container noDataMessage() {
-    return Container(
-        color: Colors.white,
-        child: Column(children: const [
-          SizedBox(height: 100),
-          Text('No data available')
         ]));
   }
 }

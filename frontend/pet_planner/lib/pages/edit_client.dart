@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart';
 import 'package:pet_planner/pages/client_class.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -12,7 +11,10 @@ import 'package:http/http.dart' as http;
 class EditClientPage extends StatefulWidget {
   final Client client;
 
-  const EditClientPage({Key? key, required this.client}) : super(key: key);
+  const EditClientPage({
+    Key? key,
+    required this.client,
+  }) : super(key: key);
 
   @override
   _EditClientPageState createState() => _EditClientPageState();
@@ -68,7 +70,7 @@ class _EditClientPageState extends State<EditClientPage> {
       String state,
       String postalCode) async {
     final http.Response response = await http.put(
-        Uri.parse('https://petplanner.azurewebsites.net/client/$id'),
+        Uri.parse('https://petplanner.azurewebsites.net/client/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -90,8 +92,10 @@ class _EditClientPageState extends State<EditClientPage> {
     }
   }
 
-  Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
+  Future saveForm() async {
+    final isValid = _formKey.currentState!.validate();
+
+    if (isValid) {
       final updatedClient = Client(
         firstName: firstNameContr.text,
         lastName: lastNameContr.text,
@@ -104,15 +108,14 @@ class _EditClientPageState extends State<EditClientPage> {
       );
       // Call the API to update the client
       await editClient(
-        updatedClient.firstName,
-        updatedClient.lastName,
-        updatedClient.phoneNumber,
-        updatedClient.email,
-        updatedClient.address,
-        updatedClient.city,
-        updatedClient.state,
-        updatedClient.postalCode,
-      );
+          updatedClient.firstName,
+          updatedClient.lastName,
+          updatedClient.phoneNumber,
+          updatedClient.email,
+          updatedClient.address,
+          updatedClient.city,
+          updatedClient.state,
+          updatedClient.postalCode);
       // Navigate back to the client details page
       Navigator.pop(context);
     }
@@ -137,7 +140,7 @@ class _EditClientPageState extends State<EditClientPage> {
                 shadowColor: Colors.transparent,
               ),
               onPressed: () async {
-                await _submitForm();
+                await saveForm();
 
                 Navigator.pop(context);
               },
@@ -166,7 +169,7 @@ class _EditClientPageState extends State<EditClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: firstNameContr,
-                    onSaved: (_) => _submitForm(),
+                    onSaved: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -182,7 +185,7 @@ class _EditClientPageState extends State<EditClientPage> {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: TextFormField(
                     controller: lastNameContr,
-                    onSaved: (_) => _submitForm(),
+                    onSaved: (_) => saveForm(),
                     style: const TextStyle(fontSize: 20, color: Colors.black),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -201,7 +204,7 @@ class _EditClientPageState extends State<EditClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: emailContr,
-                  onSaved: (_) => _submitForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
@@ -218,7 +221,7 @@ class _EditClientPageState extends State<EditClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: phoneNumContr,
-                  onSaved: (_) => _submitForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
@@ -242,7 +245,7 @@ class _EditClientPageState extends State<EditClientPage> {
                     width: 1135,
                     child: TextFormField(
                         controller: streetAddressContr,
-                        onSaved: (_) => _submitForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -265,7 +268,7 @@ class _EditClientPageState extends State<EditClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: cityContr,
-                        onSaved: (_) => _submitForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -284,7 +287,7 @@ class _EditClientPageState extends State<EditClientPage> {
                     width: 400,
                     child: TextFormField(
                         controller: stateContr,
-                        onSaved: (_) => _submitForm(),
+                        onSaved: (_) => saveForm(),
                         style:
                             const TextStyle(fontSize: 20, color: Colors.black),
                         decoration: const InputDecoration(
@@ -301,7 +304,7 @@ class _EditClientPageState extends State<EditClientPage> {
               padding: const EdgeInsets.all(20),
               child: TextFormField(
                   controller: postalCodeContr,
-                  onSaved: (_) => _submitForm(),
+                  onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[

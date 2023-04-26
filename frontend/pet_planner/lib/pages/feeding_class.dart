@@ -53,7 +53,7 @@ Future<Feeding> createFeeding(
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
-            'petId': 0,
+            'petId': 0, // will have to manually input for now
             'foodType': foodType,
             'brand': foodBrand,
             'quantity': quantity,

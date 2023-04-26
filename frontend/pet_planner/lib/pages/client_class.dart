@@ -61,7 +61,7 @@ Future<Client> createClient(
             'firstName': firstName,
             'lastName': lastName,
             'phoneNumber': phoneNumber,
-            'email': email,
+            // 'email': email,
             'address': address,
             'city': city,
             'state': state,

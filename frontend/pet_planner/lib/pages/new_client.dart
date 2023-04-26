@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/client_class.dart';
-import 'package:pet_planner/pages/schedule_page.dart';
 
 class NewClientPage extends StatefulWidget {
   const NewClientPage({Key? key}) : super(key: key);
@@ -30,8 +29,8 @@ class _NewClientPageState extends State<NewClientPage> {
   void dispose() {
     firstNameContr.dispose();
     lastNameContr.dispose();
-    phoneNumContr.dispose();
     emailContr.dispose();
+    phoneNumContr.dispose();
     streetAddressContr.dispose();
     cityContr.dispose();
     stateContr.dispose();
@@ -72,9 +71,7 @@ class _NewClientPageState extends State<NewClientPage> {
               ),
             ),
           ]),
-      body: Container(
-        child: (buildForm()),
-      ));
+      body: SingleChildScrollView(child: Container(child: (buildForm()))));
 
   Form buildForm() {
     return Form(
@@ -124,11 +121,9 @@ class _NewClientPageState extends State<NewClientPage> {
                   controller: emailContr,
                   onSaved: (_) => saveForm(),
                   style: const TextStyle(fontSize: 20, color: Colors.black),
-                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email_outlined),
-                      labelText: "Email Address",
+                      labelText: "Email",
                       hintText: 'Enter your email'),
                   validator: (email) => email != null && email.isEmpty
                       ? "Email cannot be empty"
