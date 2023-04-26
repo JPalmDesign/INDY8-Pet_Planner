@@ -5,9 +5,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-// NOTE: Client is having issues. Removing the client_class import solves
-//       the Client problem, but creates more issues elsewhere.
-
 class EditClientPage extends StatefulWidget {
   final Client client;
 
