@@ -137,6 +137,20 @@ class SchedulePageState extends State<SchedulePage> {
             ),
             SizedBox(width: 20),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFAEB2C5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return (const OldPetPage());
+                  }));
+                },
+                child: const Text("Existing Pets",
+                    style: TextStyle(color: Colors.black))),
+            SizedBox(width: 20),
+            ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFAEB2C5),
                   shape: RoundedRectangleBorder(
@@ -149,21 +163,8 @@ class SchedulePageState extends State<SchedulePage> {
               child: const Text("Existing Feedings",
                   style: TextStyle(color: Colors.black)),
             ),
-            SizedBox(width: 20),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFAEB2C5),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return (const OldPetPage());
-                  }));
-                },
-                child: const Text("Existing Pets",
-                    style: TextStyle(color: Colors.black)))
           ]),
+
           // syncfusion calendar
           Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),

@@ -10,7 +10,8 @@ class SignUp extends StatelessWidget {
       backgroundColor: const Color(0xFFC6E2C3),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return Row(
+          return SingleChildScrollView(
+              child: Row(
             children: [
               Container(
                   height: MediaQuery.of(context).size.height,
@@ -86,7 +87,7 @@ class SignUp extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return const LoginPage();
+                              return LoginPage();
                             }));
                           },
                           child: const Text("Return to login",
@@ -96,7 +97,7 @@ class SignUp extends StatelessWidget {
                     )
                   ]))
             ],
-          );
+          ));
         },
       ),
     );
