@@ -84,7 +84,7 @@ class OldPetPageState extends State<OldPetPage> {
           SingleChildScrollView(
               child: Container(
                   child: SizedBox(
-                      height: 600,
+                      height: 500,
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
