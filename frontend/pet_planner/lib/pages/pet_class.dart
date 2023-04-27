@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
 class Pet {
-  //final String clientId;
+  final int clientId;
   final String petName;
   final String animalType;
   final String breed;
@@ -15,7 +15,7 @@ class Pet {
   final String dob;
 
   const Pet({
-    // required this.clientId,
+    required this.clientId,
     required this.petName,
     required this.animalType,
     required this.breed,
@@ -26,7 +26,7 @@ class Pet {
 
   factory Pet.fromJson(Map<String, dynamic> json) {
     return Pet(
-      //clientId: json['clientId'].toString(),
+      clientId: json['clientId'],
       petName: json['name'],
       animalType: json['animalType'],
       breed: json['breed'],
@@ -37,15 +37,15 @@ class Pet {
   }
 }
 
-Future<Pet> createPet(String petName, String animalType, String breed,
-    String weight, String color, String dob) async {
+Future<Pet> createPet(int clientId, String petName, String animalType,
+    String breed, String weight, String color, String dob) async {
   final response =
       await http.post(Uri.parse('https://petplanner.azurewebsites.net/pet'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
-            'clientId': 1,
+            'clientId': clientId,
             'name': petName,
             'animalType': animalType,
             'breed': breed,

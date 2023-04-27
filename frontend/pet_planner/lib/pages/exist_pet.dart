@@ -5,8 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:pet_planner/pages/new_feed.dart';
 
 import 'new_app.dart';
-
-// displays pet
+import 'new_pet.dart';
 
 class OldPetPage extends StatefulWidget {
   const OldPetPage({Key? key}) : super(key: key);
@@ -85,7 +84,7 @@ class OldPetPageState extends State<OldPetPage> {
           SingleChildScrollView(
               child: Container(
                   child: SizedBox(
-                      height: 500,
+                      height: 600,
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
@@ -101,7 +100,7 @@ class OldPetPageState extends State<OldPetPage> {
                                   // Otherwise, expand the selected item and collapse any previously selected item
                                   _isExpanded = true;
                                   _selectedIndex = index;
-                                  height = 250.0;
+                                  height = 270.0;
                                 }
                               });
                             }
@@ -150,6 +149,23 @@ class OldPetPageState extends State<OldPetPage> {
                                                             fontFamily:
                                                                 'robotoMedium')),
                                                     const SizedBox(width: 20),
+                                                    IconButton(
+                                                      icon: const Icon(Icons
+                                                          .add_circle_outline),
+                                                      color: Colors.black,
+                                                      onPressed: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  NewFeedingPage(
+                                                                      petId: data[
+                                                                              index]
+                                                                          [
+                                                                          'id'])),
+                                                        );
+                                                      },
+                                                    ),
                                                     /* IconButton(
                                                       icon: const Icon(
                                                           Icons.edit),
@@ -366,15 +382,6 @@ class OldPetPageState extends State<OldPetPage> {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: 0,
-                  child: const Text("New Feeding"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => NewFeedingPage()),
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 1,
                   child: Text("New Appointment"),
                   onTap: () => Future(
                     () => Navigator.of(context).push(MaterialPageRoute(

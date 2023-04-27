@@ -4,7 +4,12 @@ import 'dart:async';
 import 'package:pet_planner/pages/pet_class.dart';
 
 class NewPetPage extends StatefulWidget {
-  const NewPetPage({Key? key}) : super(key: key);
+  final int clientId;
+
+  const NewPetPage({
+    Key? key,
+    required this.clientId,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NewPetPageState();
@@ -184,8 +189,8 @@ class _NewPetPageState extends State<NewPetPage> {
 
     if (isValid) {
       setState(() {
-        futurePet = createPet(petName.text, animalType.text, breed.text,
-            weight.text, color.text, dob.text);
+        futurePet = createPet(widget.clientId, petName.text, animalType.text,
+            breed.text, weight.text, color.text, dob.text);
       });
     }
   }

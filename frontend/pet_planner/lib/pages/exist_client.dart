@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pet_planner/pages/new_pet.dart';
 
-import 'edit_client.dart';
-
 class OldClientPage extends StatefulWidget {
   const OldClientPage({
     Key? key,
@@ -105,7 +103,7 @@ class OldClientPageState extends State<OldClientPage> {
           SingleChildScrollView(
               child: Container(
                   child: SizedBox(
-                      height: 500,
+                      height: 600,
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: data.length,
@@ -187,6 +185,21 @@ class OldClientPageState extends State<OldClientPage> {
                                                         },
                                                         color: Colors.black,
                                                       ), */
+                                                      IconButton(
+                                                        icon: const Icon(Icons
+                                                            .add_circle_outline),
+                                                        color: Colors.black,
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                                builder: (context) =>
+                                                                    NewPetPage(
+                                                                        clientId:
+                                                                            data[index]['id'])),
+                                                          );
+                                                        },
+                                                      ),
                                                       const SizedBox(width: 5),
                                                       IconButton(
                                                         icon:
@@ -349,30 +362,7 @@ class OldClientPageState extends State<OldClientPage> {
                                     ),
                                   ));
                             }
-                          })))),
-
-          // we might want this on each client box instead of just the one time (so we can keep track of index(id))
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            PopupMenuButton(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              color: Color(0xFFAEB2C5),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 0,
-                  child: const Text("New Pet"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => NewPetPage()),
-                    ),
-                  ),
-                ),
-              ],
-              icon: const Icon(Icons.add_circle_outline, color: Colors.black),
-              iconSize: 50,
-              offset: const Offset(170, 50),
-            )
-          ])
+                          }))))
         ]));
   }
 }

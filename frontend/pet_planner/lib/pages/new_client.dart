@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:pet_planner/pages/client_class.dart';
 
-// create new client
-
 class NewClientPage extends StatefulWidget {
   const NewClientPage({Key? key}) : super(key: key);
 

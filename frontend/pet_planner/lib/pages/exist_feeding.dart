@@ -6,8 +6,6 @@ import 'package:pet_planner/pages/new_feed.dart';
 
 import 'new_app.dart';
 
-// displays feedings
-
 class OldFeedingPage extends StatefulWidget {
   const OldFeedingPage({Key? key}) : super(key: key);
 
@@ -310,35 +308,6 @@ class OldFeedingPageState extends State<OldFeedingPage> {
                                   ),
                                 ));
                           })))),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            PopupMenuButton(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              color: Color(0xFFAEB2C5),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 0,
-                  child: const Text("New Feeding"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => NewFeedingPage()),
-                    ),
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 1,
-                  child: Text("New Appointment"),
-                  onTap: () => Future(
-                    () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => NewAppointmentPage())),
-                  ),
-                ),
-              ],
-              icon: const Icon(Icons.add_circle_outline, color: Colors.black),
-              iconSize: 50,
-              offset: const Offset(170, 50),
-            )
-          ])
         ]));
   }
 }

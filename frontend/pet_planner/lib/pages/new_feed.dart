@@ -4,7 +4,12 @@ import 'dart:async';
 import 'package:pet_planner/pages/feeding_class.dart';
 
 class NewFeedingPage extends StatefulWidget {
-  const NewFeedingPage({super.key});
+  final int petId;
+
+  const NewFeedingPage({
+    Key? key,
+    required this.petId,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NewFeedingPageState();
@@ -221,6 +226,7 @@ class _NewFeedingPageState extends State<NewFeedingPage> {
     if (isValid) {
       setState(() {
         futureFeeding = createFeeding(
+            widget.petId,
             foodType.text,
             foodBrand.text,
             quantity.text,
