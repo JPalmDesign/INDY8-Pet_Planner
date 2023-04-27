@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 // Tutorial (Get): https://docs.flutter.dev/cookbook/networking/fetch-data#2-make-a-network-request
 
 class Feeding {
-  final int petId;
+  //final int petId;
+  final int feedId;
   final String foodType;
   final String foodBrand;
   final int quantity;
@@ -17,7 +18,8 @@ class Feeding {
   final String name;
 
   const Feeding(
-      {required this.petId,
+      { //required this.petId,
+      required this.feedId,
       required this.foodType,
       required this.foodBrand,
       required this.quantity,
@@ -29,7 +31,7 @@ class Feeding {
 
   factory Feeding.fromJson(Map<String, dynamic> json) {
     return Feeding(
-        petId: json['id'],
+        feedId: json['id'],
         foodType: json['foodType'],
         foodBrand: json['brand'],
         quantity: json['quantity'],
@@ -57,7 +59,7 @@ Future<Feeding> createFeeding(
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
-            'petId': petId, // will have to manually input for now
+            'petId': petId,
             'foodType': foodType,
             'brand': foodBrand,
             'quantity': quantity,

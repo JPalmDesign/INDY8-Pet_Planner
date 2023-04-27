@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/forgot_password.dart';
 import 'package:pet_planner/pages/schedule_page.dart';
@@ -12,7 +14,8 @@ class LoginPage extends StatelessWidget {
       backgroundColor: const Color(0xFFC6E2C3),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return Row(
+          return SingleChildScrollView(
+              child: Row(
             children: [
               Container(
                   height: MediaQuery.of(context).size.height,
@@ -57,7 +60,7 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return const ForgotPassword();
+                                return ForgotPassword();
                               }));
                             },
                             child: const Text(
@@ -77,7 +80,7 @@ class LoginPage extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return const SchedulePage();
+                                    return SchedulePage();
                                   }));
                                 },
                                 child: const Text('Sign in',
@@ -90,7 +93,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return const SignUp();
+                              return SignUp();
                             }));
                           },
                           child: const Text("Don't have an account? Sign up!",
@@ -100,7 +103,7 @@ class LoginPage extends StatelessWidget {
                     )
                   ]))
             ],
-          );
+          ));
         },
       ),
     );

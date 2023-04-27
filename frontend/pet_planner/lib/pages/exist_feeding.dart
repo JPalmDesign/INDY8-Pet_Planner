@@ -99,7 +99,7 @@ class OldFeedingPageState extends State<OldFeedingPage> {
                                   // Otherwise, expand the selected item and collapse any previously selected item
                                   _isExpanded = true;
                                   _selectedIndex = index;
-                                  height = 220.0;
+                                  height = 270.0;
                                 }
                               });
                             }
@@ -174,7 +174,7 @@ class OldFeedingPageState extends State<OldFeedingPage> {
                                                           children: [
                                                             Row(children: [
                                                               const Text(
-                                                                  "Pet ID: ",
+                                                                  "Feeding ID: ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18,
@@ -289,6 +289,80 @@ class OldFeedingPageState extends State<OldFeedingPage> {
                                                                       ? data[index]
                                                                               [
                                                                               'unitOfMeasure']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Time of Day: ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty &&
+                                                                          data[index]['timeOfDay'] !=
+                                                                              null
+                                                                      ? data[index]
+                                                                              [
+                                                                              'timeOfDay']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                            ]),
+                                                            Row(children: [
+                                                              const Text(
+                                                                  "Medicines(Optional): ",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty
+                                                                      ? data[index]
+                                                                              [
+                                                                              'medicines']
+                                                                          .toString()
+                                                                      : '',
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              const Text(" ",
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          18,
+                                                                      fontFamily:
+                                                                          'robotoMedium')),
+                                                              Text(
+                                                                  data.isNotEmpty
+                                                                      ? data[index]
+                                                                              [
+                                                                              'dose']
                                                                           .toString()
                                                                       : '',
                                                                   style: const TextStyle(
