@@ -15,8 +15,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'client_class.dart';
-
-// schedule page
+import 'exist_feeding.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -116,56 +115,58 @@ class SchedulePageState extends State<SchedulePage> {
                       ),
                     )),
               )),
-          Row(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
             Padding(
-                padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFAEB2C5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return (OldClientPage());
-                    }));
-                  },
-                  child: const Text("Existing Clients",
-                      style: TextStyle(color: Colors.black)),
-                )),
-            Container(
-                width: 800,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "Your Schedule",
-                            style: TextStyle(
-                                fontFamily: 'robotoMedium', fontSize: 36),
-                          )
-                        ]))),
-            Padding(
-                padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFAEB2C5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                    ),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return (const OldPetPage());
-                      }));
-                    },
-                    child: const Text("Existing Pets",
-                        style: TextStyle(color: Colors.black))))
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Text("Your Schedule",
+                    style: TextStyle(fontFamily: 'robotoMedium', fontSize: 36)))
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFAEB2C5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15))),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return (OldClientPage());
+                }));
+              },
+              child: const Text("Existing Clients",
+                  style: TextStyle(color: Colors.black)),
+            ),
+            SizedBox(width: 20),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFAEB2C5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15))),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return (OldFeedingPage());
+                }));
+              },
+              child: const Text("Existing Feedings",
+                  style: TextStyle(color: Colors.black)),
+            ),
+            SizedBox(width: 20),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFAEB2C5),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return (const OldPetPage());
+                  }));
+                },
+                child: const Text("Existing Pets",
+                    style: TextStyle(color: Colors.black)))
           ]),
           // syncfusion calendar
           Padding(
-              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: SizedBox(
                   height: 500,
                   child: SfCalendar(
