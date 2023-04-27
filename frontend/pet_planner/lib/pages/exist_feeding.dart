@@ -6,22 +6,22 @@ import 'package:pet_planner/pages/new_feed.dart';
 
 import 'new_app.dart';
 
-class OldPetPage extends StatefulWidget {
-  const OldPetPage({Key? key}) : super(key: key);
+class OldFeedingPage extends StatefulWidget {
+  const OldFeedingPage({Key? key}) : super(key: key);
 
   @override
-  OldPetPageState createState() => OldPetPageState();
+  OldFeedingPageState createState() => OldFeedingPageState();
 }
 
-class OldPetPageState extends State<OldPetPage> {
+class OldFeedingPageState extends State<OldFeedingPage> {
   List<dynamic> data = [];
   bool _isExpanded = false;
   int? _selectedIndex;
   double height = 105;
 
-  Future<void> fetchPet() async {
-    final response =
-        await http.get(Uri.parse('https://petplanner.azurewebsites.net/pet'));
+  Future<void> fetchFeeding() async {
+    final response = await http
+        .get(Uri.parse('https://petplanner.azurewebsites.net/feeding'));
 
     if (response.statusCode == 200) {
       final parsed = jsonDecode(response.body);
@@ -31,28 +31,28 @@ class OldPetPageState extends State<OldPetPage> {
         });
       }
     } else {
-      throw Exception('Failed to load pet.');
+      throw Exception('Failed to load feeding.');
     }
   }
 
-  Future<void> deletePet(int id) async {
+  Future<void> deleteFeeding(int id) async {
     final http.Response response = await http
-        .delete(Uri.parse('https://petplanner.azurewebsites.net/pet/$id'));
+        .delete(Uri.parse('https://petplanner.azurewebsites.net/feeding/$id'));
 
     if (response.statusCode == 200) {
       setState(() {
-        data.removeWhere((pet) => pet['id'] == id);
-        fetchPet();
+        data.removeWhere((feeding) => feeding['id'] == id);
+        fetchFeeding();
       });
     } else {
-      throw Exception('Failed to delete pet.');
+      throw Exception('Failed to delete feeding.');
     }
   }
 
   @override
   void initState() {
     super.initState();
-    fetchPet();
+    fetchFeeding();
   }
 
   @override
@@ -76,7 +76,7 @@ class OldPetPageState extends State<OldPetPage> {
           const Padding(
               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Text(
-                "Existing Pets",
+                "Existing Feedings",
                 style: TextStyle(fontFamily: 'robotoMedium', fontSize: 36),
               )),
           const SizedBox(height: 20),
@@ -99,7 +99,7 @@ class OldPetPageState extends State<OldPetPage> {
                                   // Otherwise, expand the selected item and collapse any previously selected item
                                   _isExpanded = true;
                                   _selectedIndex = index;
-                                  height = 250.0;
+                                  height = 220.0;
                                 }
                               });
                             }
@@ -131,7 +131,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                 child: Column(children: [
                                                   Row(children: [
                                                     const Icon(
-                                                      Icons.pets,
+                                                      Icons.medication_outlined,
                                                       color: Colors.black,
                                                       size: 30,
                                                     ),
@@ -154,13 +154,13 @@ class OldPetPageState extends State<OldPetPage> {
                                                       onPressed: () {},
                                                       color: Colors.black,
                                                     ), */
-                                                    const SizedBox(width: 5),
+                                                    //  const SizedBox(width: 5),
                                                     IconButton(
                                                       icon: const Icon(
                                                           Icons.delete),
                                                       color: Colors.black,
                                                       onPressed: () {
-                                                        deletePet(
+                                                        deleteFeeding(
                                                             data[index]['id']);
                                                       },
                                                     ),
@@ -199,7 +199,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                             ]),
                                                             Row(children: [
                                                               const Text(
-                                                                  "Client ID: ",
+                                                                  "Food Type: ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18,
@@ -211,7 +211,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                                   data.isNotEmpty
                                                                       ? data[index]
                                                                               [
-                                                                              'clientId']
+                                                                              'foodType']
                                                                           .toString()
                                                                       : '',
                                                                   style: const TextStyle(
@@ -224,7 +224,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                             ]),
                                                             Row(children: [
                                                               const Text(
-                                                                  "Animal Type: ",
+                                                                  "Brand: ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18,
@@ -236,7 +236,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                                   data.isNotEmpty
                                                                       ? data[index]
                                                                               [
-                                                                              'animalType']
+                                                                              'brand']
                                                                           .toString()
                                                                       : '',
                                                                   style: const TextStyle(
@@ -249,7 +249,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                             ]),
                                                             Row(children: [
                                                               const Text(
-                                                                  "Breed: ",
+                                                                  "Quantity: ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18,
@@ -261,7 +261,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                                   data.isNotEmpty
                                                                       ? data[index]
                                                                               [
-                                                                              'breed']
+                                                                              'quantity']
                                                                           .toString()
                                                                       : '',
                                                                   style: const TextStyle(
@@ -274,7 +274,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                             ]),
                                                             Row(children: [
                                                               const Text(
-                                                                  "Color: ",
+                                                                  "Unit of Measure: ",
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18,
@@ -283,10 +283,12 @@ class OldPetPageState extends State<OldPetPage> {
                                                                       fontFamily:
                                                                           'robotoMedium')),
                                                               Text(
-                                                                  data.isNotEmpty
+                                                                  data.isNotEmpty &&
+                                                                          data[index]['unitOfMeasure'] !=
+                                                                              null
                                                                       ? data[index]
                                                                               [
-                                                                              'color']
+                                                                              'unitOfMeasure']
                                                                           .toString()
                                                                       : '',
                                                                   style: const TextStyle(
@@ -297,57 +299,7 @@ class OldPetPageState extends State<OldPetPage> {
                                                                       fontFamily:
                                                                           'robotoMedium')),
                                                             ]),
-                                                            Row(children: [
-                                                              const Text(
-                                                                  "Weight: ",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                              Text(
-                                                                  data.isNotEmpty
-                                                                      ? data[index]
-                                                                              [
-                                                                              'weight']
-                                                                          .toString()
-                                                                      : '',
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                            ]),
-                                                            Row(children: [
-                                                              const Text(
-                                                                  "Birthday: ",
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18,
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                              Text(
-                                                                  data.isNotEmpty
-                                                                      ? data[index]
-                                                                              [
-                                                                              'dateOfBirth']
-                                                                          .toString()
-                                                                      : '',
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontFamily:
-                                                                          'robotoMedium')),
-                                                            ]),
-                                                          ]))
+                                                          ])),
                                                 ]))
                                           ],
                                         ),

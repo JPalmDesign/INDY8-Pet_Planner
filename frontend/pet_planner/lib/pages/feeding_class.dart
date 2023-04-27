@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class Feeding {
   final String foodType;
   final String foodBrand;
-  final String quantity;
+  final int quantity;
   final String measure;
   final String timeOfDay;
   final String medicine;
@@ -29,7 +29,7 @@ class Feeding {
     return Feeding(
         foodType: json['foodType'],
         foodBrand: json['brand'],
-        quantity: json['quantity'].toString(),
+        quantity: json['quantity'],
         measure: json['unitOfMeasure'],
         timeOfDay: json['timeOfDay'].toString(),
         medicine: json['medicines'],
@@ -53,7 +53,7 @@ Future<Feeding> createFeeding(
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{
-            'petId': 0, // will have to manually input for now
+            'petId': 102, // will have to manually input for now
             'foodType': foodType,
             'brand': foodBrand,
             'quantity': quantity,

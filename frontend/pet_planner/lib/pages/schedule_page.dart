@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pet_planner/pages/app_view.dart';
 import 'package:pet_planner/pages/exist_client.dart';
@@ -9,9 +11,53 @@ import 'package:pet_planner/pages/new_client.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:pet_planner/pages/event_provider.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class SchedulePage extends StatelessWidget {
-  const SchedulePage({super.key});
+import 'client_class.dart';
+
+class SchedulePage extends StatefulWidget {
+  const SchedulePage({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => SchedulePageState();
+}
+
+class SchedulePageState extends State<SchedulePage> {
+  List<Client> _clients = [];
+  List<Client> _searchResults = [];
+  bool _isVisible = false;
+
+  Future<void> _fetchClients() async {
+    final response = await http
+        .get(Uri.parse('https://petplanner.azurewebsites.net/client'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      setState(() {
+        _clients = data.map((client) => Client.fromJson(client)).toList();
+        _searchResults = _clients;
+      });
+    } else {
+      throw Exception('Failed to fetch clients');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchClients();
+  }
+
+  void _onSearchTextChanged(String text) {
+    setState(() {
+      _searchResults = _clients.where((client) {
+        final fullName =
+            '${client.firstName.toLowerCase()} ${client.lastName.toLowerCase()}';
+        return fullName.contains(text.toLowerCase());
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,45 +68,52 @@ class SchedulePage extends StatelessWidget {
           SizedBox(
               height: 75,
               child: AppBar(
-                  backgroundColor: const Color(0xFFFFFFFF).withOpacity(.8),
-                  leading: PopupMenuButton(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                    color: const Color(0xFFAEB2C5),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 0,
-                        child: const Text("Logout"),
-                        onTap: () => Future(
-                          () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (_) => const LoginPage()),
-                          ),
+                backgroundColor: const Color(0xFFFFFFFF).withOpacity(.8),
+                leading: PopupMenuButton(
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                  color: const Color(0xFFAEB2C5),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      value: 0,
+                      child: const Text("Logout"),
+                      onTap: () => Future(
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const LoginPage()),
                         ),
                       ),
-                      PopupMenuItem(
-                        value: 1,
-                        child: const Text("Reset Password"),
-                        onTap: () => Future(
-                          () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (_) => const ForgotPassword()),
-                          ),
-                        ),
-                      ),
-                    ],
-                    icon: const Icon(Icons.pets, color: Colors.black),
-                    iconSize: 30,
-                    offset: const Offset(0, 45),
-                  ),
-                  title: const Padding(
-                    padding: EdgeInsets.fromLTRB(700, 0, 0, 0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "Search",
-                          prefixIcon: Icon(Icons.search, color: Colors.black)),
                     ),
-                  ))),
+                    PopupMenuItem(
+                      value: 1,
+                      child: const Text("Reset Password"),
+                      onTap: () => Future(
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const ForgotPassword()),
+                        ),
+                      ),
+                    ),
+                  ],
+                  icon: const Icon(Icons.pets, color: Colors.black),
+                  iconSize: 30,
+                  offset: const Offset(0, 45),
+                ),
+                title: Padding(
+                    padding: const EdgeInsets.fromLTRB(700, 0, 0, 0),
+                    child: GestureDetector(
+                      //onTap: () => buildResults(),
+                      child: TextField(
+                        textInputAction: TextInputAction.search,
+                        decoration: const InputDecoration(
+                            hintText: "Search",
+                            prefixIcon: InkWell(
+                                child:
+                                    Icon(Icons.search, color: Colors.black))),
+                        onChanged: _onSearchTextChanged,
+                        onTap: buildResults,
+                      ),
+                    )),
+              )),
           Row(children: [
             Padding(
                 padding: EdgeInsets.fromLTRB(40, 20, 0, 0),
@@ -149,6 +202,21 @@ class SchedulePage extends StatelessWidget {
                                 fontSize: 20,
                                 color: Colors.black))),
                   ))),
+          /* Column(children: [
+            Expanded(
+                child: ListView.builder(
+              itemCount: _searchResults.length,
+              itemBuilder: (BuildContext context, int index) {
+                final client = _searchResults[index];
+                return SizedBox(
+                    height: 100,
+                    child: ListTile(
+                      title: Text('${client.firstName} ${client.lastName}'),
+                      subtitle: Text(client.email),
+                    ));
+              },
+            ))
+          ]), */
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             PopupMenuButton(
               shape: const RoundedRectangleBorder(
@@ -171,6 +239,22 @@ class SchedulePage extends StatelessWidget {
             )
           ]),
         ]));
+  }
+
+  Column buildResults() {
+    return Column(children: [
+      Expanded(
+        child: ListView.builder(
+          itemCount: _searchResults.length,
+          itemBuilder: (BuildContext context, int index) {
+            final client = _searchResults[index];
+            return ListTile(
+              title: Text('${client.firstName} ${client.lastName}'),
+            );
+          },
+        ),
+      ),
+    ]);
   }
 }
 

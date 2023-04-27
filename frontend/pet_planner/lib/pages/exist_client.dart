@@ -173,7 +173,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                               fontFamily:
                                                                   'robotoMedium')),
                                                       const SizedBox(width: 20),
-                                                      IconButton(
+                                                      /* IconButton(
                                                         icon: Icon(Icons.edit),
                                                         onPressed: () {
                                                           Navigator.push(
@@ -186,7 +186,7 @@ class OldClientPageState extends State<OldClientPage> {
                                                           );
                                                         },
                                                         color: Colors.black,
-                                                      ),
+                                                      ), */
                                                       const SizedBox(width: 5),
                                                       IconButton(
                                                         icon:
