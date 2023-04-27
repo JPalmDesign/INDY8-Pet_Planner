@@ -104,7 +104,7 @@ class _NewPetPageState extends State<NewPetPage> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "Date of Birth",
-                      hintText: "Enter the pet's date of birth"),
+                      hintText: "Ex: 2023-04-27"),
                   validator: (dob) => dob != null && dob.isEmpty
                       ? "Date of birth cannot be empty"
                       : null),
