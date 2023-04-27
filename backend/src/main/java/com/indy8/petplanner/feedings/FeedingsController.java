@@ -4,10 +4,16 @@ import com.indy8.petplanner.config.FeedingMapper;
 import com.indy8.petplanner.dataaccess.FeedingRepository;
 import com.indy8.petplanner.dataaccess.PetRepository;
 import com.indy8.petplanner.domain.Feeding;
+import com.indy8.petplanner.domain.Pet;
+import com.indy8.petplanner.pets.PetByIdResponse;
+import com.indy8.petplanner.pets.UpdatePetRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class FeedingsController {
@@ -30,6 +36,16 @@ public class FeedingsController {
             );
         }
         return this.feedingMapper.mapFeedingToFeedingByIdResponse(dbResult.get());
+    }
+
+    @GetMapping("/feeding")
+    public List<FeedingByIdResponse> getAllFeedings() {
+        var dbResult = feedingRepository.findAll();
+        var response = new ArrayList<FeedingByIdResponse>();
+        for(var feeding : dbResult) {
+            response.add(this.feedingMapper.mapFeedingToFeedingByIdResponse(feeding));
+        }
+        return response;
     }
 
     @PostMapping("/feeding")

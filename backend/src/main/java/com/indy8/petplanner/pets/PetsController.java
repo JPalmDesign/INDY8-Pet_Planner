@@ -38,6 +38,16 @@ public class PetsController {
         return this.petMapper.mapPetToPetByIdResponse(dbResult.get());
     }
 
+    @GetMapping("/pet")
+    public List<PetByIdResponse> getAllPets() {
+        var dbResult = petRepository.findAll();
+        var response = new ArrayList<PetByIdResponse>();
+        for(var pet : dbResult) {
+            response.add(this.petMapper.mapPetToPetByIdResponse(pet));
+        }
+        return response;
+    }
+
     @PostMapping("/pet")
     public CreateNewPetResponse createNewPet(@RequestBody CreateNewPetRequest createNewPetRequest){
         var pet = this.petMapper.mapCreateNewPetRequestToPet(createNewPetRequest);
@@ -66,16 +76,6 @@ public class PetsController {
         updatePet(updatePetRequest, pet);
         petRepository.save(pet);
         return this.petMapper.mapPetToUpdatePetResponse(pet);
-    }
-
-    @GetMapping("/pet")
-    public List<PetByIdResponse> getAllPets() {
-        var dbResult = petRepository.findAll();
-        var response = new ArrayList<PetByIdResponse>();
-        for(var pet : dbResult) {
-            response.add(this.petMapper.mapPetToPetByIdResponse(pet));
-        }
-        return response;
     }
 
     private static void updatePet(UpdatePetRequest updatePetRequest, Pet pet) {
