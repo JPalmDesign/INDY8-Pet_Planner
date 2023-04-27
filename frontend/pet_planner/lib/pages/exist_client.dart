@@ -208,6 +208,29 @@ class OldClientPageState extends State<OldClientPage> {
                                                             children: [
                                                               Row(children: [
                                                                 const Text(
+                                                                    "Client ID: ",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            18,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontFamily:
+                                                                            'robotoMedium')),
+                                                                Text(
+                                                                    data.isNotEmpty
+                                                                        ? data[index]['id']
+                                                                            .toString()
+                                                                        : '',
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .black,
+                                                                        fontSize:
+                                                                            18,
+                                                                        fontFamily:
+                                                                            'robotoMedium')),
+                                                              ]),
+                                                              Row(children: [
+                                                                const Text(
                                                                     "Phone Number: ",
                                                                     style: TextStyle(
                                                                         fontSize:

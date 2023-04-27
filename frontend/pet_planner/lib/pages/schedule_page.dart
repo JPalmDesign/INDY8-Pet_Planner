@@ -16,6 +16,8 @@ import 'package:http/http.dart' as http;
 
 import 'client_class.dart';
 
+// schedule page
+
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
 

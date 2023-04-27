@@ -6,6 +6,8 @@ import 'package:pet_planner/pages/new_feed.dart';
 
 import 'new_app.dart';
 
+// displays feedings
+
 class OldFeedingPage extends StatefulWidget {
   const OldFeedingPage({Key? key}) : super(key: key);
 
